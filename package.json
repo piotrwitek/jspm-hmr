@@ -1,0 +1,27 @@
+{
+  "name": "jspm-hot-reload-server",
+  "version": "0.1.1",
+  "description": "JSPM Hot-Reload Server for cool development",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piotrwitek/jspm-hot-reload-server.git"
+  },
+  "keywords": [
+    "jspm",
+    "systemjs",
+    "hot-reload",
+    "http",
+    "server",
+    "development"
+  ],
+  "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/piotrwitek/jspm-hot-reload-server/issues"
+  },
+  "homepage": "https://github.com/piotrwitek/jspm-hot-reload-server#readme"
+}
