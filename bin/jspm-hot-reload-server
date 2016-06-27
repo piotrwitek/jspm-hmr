@@ -1,65 +1,84 @@
 #!/usr/bin/env node
 
+/*
+ *   Copyright 2016 Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 'use strict';
 
 const jspmServer = require('../lib/server'),
   opener = require('opener'),
-  program = require('commander')
+  program = require('commander'),
   packageJson = require('../package.json');
 
 program
   .version(packageJson.version)
-  .usage('[path] [options]')
   .description(packageJson.description)
-  .option('-O, --open', 'automatically open browser')
+  .usage('[path] [options]')
+  .option('-O, --open', 'automatically open browser (defaults to false)')
+  .option('-C, --caching [number]', 'enable caching with max-age= (defaults to -1)', parseInt)
   .option('-P, --port <number>', 'port number (defaults to 8888)', parseInt)
   .parse(process.argv);
 
-console.log(' - args', program);
+const options = {
+  path: program.args[0] || '.',
+  // check NaN
+  caching: program.caching,
+  port: program.port ? program.port : 8888,
+  command: null
+};
 
-
-const path = program.args[0],
+const protocol = 'http',
   host = 'localhost',
-  port = (program.port ? program.port : 8888),
-  protocol = 'http://',
-  command = null;
-
-
+  url = protocol + '://' + host + ':' + options.port;
 
 // main
-return;
-showInfoHeader();
-console.log('http-server started, serving "' + options.baseUrl +
-  '" at http://' + options.host + ':' + options.port);
-console.log('hit CTRL-C to stop the server\n\n');
-
+logOptionsInfo();
+// initialize server
+jspmServer(options);
+logStartedInfo();
+// open browser
 if (program.open) {
-  opener(protocol + '//' + host + ':' + port, {
-    command: command
+  opener(url, {
+    command: options.command
   });
 }
 
-// helpers
-function showInfoHeader() {
+// log helpers
+function logOptionsInfo() {
   const versionInfo = packageJson.version;
   const environmentInfo = (process.env.NODE_ENV === 'production' ? 'production ' : 'development');
   const cachingInfo = (options.caching ? 'enabled ' : 'disabled');
-  const hot_reloadInfo = (options.hotReload ? 'enabled ' : 'disabled');
 
   console.log('\n' +
-    '#################################' + '\n' +
-    '#    JSPM Hot-Reload Server    ##' + '\n' +
-    '#------------------------------##' + '\n' +
-    '# version      | ' + versionInfo + '         ##' + '\n' +
-    '# environment  | ' + environmentInfo + '   ##' + '\n' +
-    '# caching      | ' + cachingInfo + '      ##' + '\n' +
-    '# hot-reload   | ' + hot_reloadInfo + '      ##' + '\n' +
-    '#################################' + '\n'
+    '################################' + '\n' +
+    '#    JSPM Hot-Reload Server    #' + '\n' +
+    '#--------------+---------------#' + '\n' +
+    '# version      | ' + versionInfo + '         #' + '\n' +
+    '# environment  | ' + environmentInfo + '   #' + '\n' +
+    '# caching      | ' + cachingInfo + '      #' + '\n' +
+    '################################' + '\n'
   );
 }
 
-// exit hooks
+function logStartedInfo() {
+  console.log('http-server serving "' + options.path + '" at ' + url);
+  console.log('hit CTRL-C to stop the server\n\n');
+}
 
+// exit hooks
 if (process.platform === 'win32') {
   require('readline').createInterface({
     input: process.stdin,

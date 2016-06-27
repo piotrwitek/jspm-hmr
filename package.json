@@ -5,6 +5,7 @@
   "main": "./lib/server.js",
   "scripts": {
     "start": "node ./lib/server.js",
+    "lint": "eslint bin/* lib/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
