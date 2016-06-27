@@ -1,21 +1,26 @@
-## JSPM Hot-reload Server for cool development
+# JSPM Hot-Reload Server
 
-> Hot-Reload for dummies!!!
+> Hot-Reload made for dummies!
 
-#### Install
+Dependencies:
+- http-server
+- chokidar-socket-emitter
+
+---
+### Install
 
 ```
-$ npm install jspm-hot-reload-server
+$ npm install jspm-hot-reload-server [-g]
 ```
 
-#### Usage
+---
+### Usage
 
 ```
-$ ./node_modules/.bin/jspm-hot-reload-server
+$ [./node_modules/.bin/]jspm-hot-reload-server [path] [options]
 ```
-
-
-## License
+---
+### License
 
 Copyright 2016 Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)
 
