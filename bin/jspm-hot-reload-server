@@ -17,17 +17,26 @@
  */
 
 'use strict';
+const fs = require('fs'),
+  path = require('path'),
+  readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 const jspmServer = require('../lib/jspm-server'),
   opener = require('opener'),
   program = require('commander'),
+  async = require('async'),
   packageJson = require('../package.json');
 
 program
   .version(packageJson.version)
-  .description(packageJson.description)
+  .description(packageJson.description + '\n  Version: ' + packageJson.version)
   .usage('[path] [options]')
-  .option('-I, --init', 'initialize boilerplate index.html with client hot-reload setup')
+  .option('-I, --init', 'initialize boilerplate index.html with hot-reload setup included')
   .option('-O, --open', 'automatically open browser (defaults to false)')
   .option('-C, --caching [number]', 'enable caching with max-age= (defaults to -1)', parseInt)
   .option('-P, --port <number>', 'port number (defaults to 8888)', parseInt)
@@ -35,8 +44,7 @@ program
 
 const options = {
   path: program.args[0] || '.',
-  // check NaN
-  caching: program.caching,
+  caching: program.caching || -1,
   port: program.port ? program.port : 8888,
   command: null
 };
@@ -45,16 +53,70 @@ const protocol = 'http',
   host = 'localhost',
   url = protocol + '://' + host + ':' + options.port;
 
-// main
-logOptionsInfo();
-// initialize server
-jspmServer(options);
-logStartedInfo();
-// open browser
-if (program.open) {
-  opener(url, {
-    command: options.command
-  });
+if (program.init) {
+  let cancelled = false;
+
+  async.eachSeries(
+    ['index.html', 'loader-style.css'],
+    function(fileName, done) {
+      if (cancelled) {
+        done('cancelled');
+      }
+      const sourceStream = path.join(__dirname, '/../', fileName);
+      const targetStream = path.join(process.cwd(), path.sep, fileName);
+
+      fs.createReadStream(sourceStream).pipe(fs.createWriteStream(targetStream, {
+        flag: 'wx'
+      }, (err) => {
+        console.log('start');
+        if (err) {
+          // file exists error, ask for permission to overwrite
+          if (err.code === 'EEXIST') {
+            console.error('File "' + fileName + '" already exists in:\n   -> ' + targetStream);
+            rl.question('Overwrite? [yes]/no: ', (answer) => {
+              if (answer === 'no') {
+                console.log('\n  Process cancelled.');
+                cancelled = true;
+                done(err);
+              } else {
+                console.log('\n  Overwriting file.');
+                fs.createWriteStream(targetStream);
+              }
+              rl.close();
+            });
+          }
+        } else {
+          // write completed
+          console.log(`\n  Created "${fileName}" in current working directory.`);
+        }
+      }));
+      done();
+    },
+    function(err) {
+      if (err) {
+        console.log('\n Boilerplate initialization failed.');
+      } else {
+        console.log('\n  Boilerplate initialization completed in current directory.');
+      }
+    }
+  );
+} else {
+  main();
+}
+
+function main() {
+  logOptionsInfo();
+
+  // initialize server
+  jspmServer.start(options);
+  logStartedInfo();
+
+  // open browser
+  if (program.open) {
+    opener(url, {
+      command: options.command
+    });
+  }
 }
 
 // log helpers
@@ -64,19 +126,19 @@ function logOptionsInfo() {
   const cachingInfo = (options.caching ? 'enabled ' : 'disabled');
 
   console.log('\n' +
-    '################################' + '\n' +
-    '#    JSPM Hot-Reload Server    #' + '\n' +
-    '#--------------+---------------#' + '\n' +
-    '# version      | ' + versionInfo + '         #' + '\n' +
-    '# environment  | ' + environmentInfo + '   #' + '\n' +
-    '# caching      | ' + cachingInfo + '      #' + '\n' +
-    '################################' + '\n'
+    '  ################################' + '\n' +
+    '  #    JSPM Hot-Reload Server    #' + '\n' +
+    '  #--------------+---------------#' + '\n' +
+    '  # version      | ' + versionInfo + '         #' + '\n' +
+    '  # environment  | ' + environmentInfo + '   #' + '\n' +
+    '  # caching      | ' + cachingInfo + '      #' + '\n' +
+    '  ################################' + '\n'
   );
 }
 
 function logStartedInfo() {
   console.log('http-server serving "' + options.path + '" at ' + url);
-  console.log('hit CTRL-C to stop the server\n\n');
+  console.log('hit CTRL-C to stop the server');
 }
 
 // exit hooks
@@ -89,10 +151,10 @@ if (process.platform === 'win32') {
   });
 }
 process.on('SIGINT', function() {
-  console.info('http-server stopped');
+  console.info('\n  http-server stopped');
   process.exit();
 });
 process.on('SIGTERM', function() {
-  console.info('http-server stopped');
+  console.info('\n  http-server stopped');
   process.exit();
 });

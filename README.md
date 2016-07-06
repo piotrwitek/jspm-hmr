@@ -1,7 +1,13 @@
 # JSPM Hot-Reload Server
-> Hot-Reload made for dummies!
+> SystemJS Hot-Reload Server made for dummies!
 
 Package for Node.js
+
+---
+
+### Features
+- Use --init flag to create boilerplate index.html with hot-reload setup included, then simply start server and hack your app
+
 
 ### How it works
 Watches specified files for changes in chosen path, sends events through web sockets to your client to reload only the JavaScript modules that has changed.
@@ -13,6 +19,7 @@ Dependencies:
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
 
 ---
+
 ### Install
 
 ```
@@ -20,9 +27,10 @@ $ npm install jspm-hot-reload-server [--save-dev]
 ```
 > Tip: You can install globally using -g flag so you can use it outside project
 
-> Pro-tip: You can run server with --init flag to initialize boilerplate index.html with hot-reload setup
+> Pro-tip: You can run server with --init flag to initialize boilerplate index.html with hot-reload setup included
 
 ---
+
 ### Usage
 
 ```
@@ -33,7 +41,7 @@ $ jspm-hot-reload-server [path] [options]
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -I, --init              initialize boilerplate index.html with client hot-reload setup
+    -I, --init              initialize boilerplate index.html with hot-reload setup included
     -O, --open              automatically open browser (defaults to false)
     -C, --caching [number]  enable caching with max-age= (defaults to -1)
     -P, --port <number>     port number (defaults to 8888)
@@ -51,6 +59,7 @@ $ jhrs "dist" --port 4444 -C 3600
 ```
 
 ---
+
 ### License
 
 Copyright 2016 Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)

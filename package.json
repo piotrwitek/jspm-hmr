@@ -1,9 +1,10 @@
 {
   "name": "jspm-hot-reload-server",
-  "version": "0.1.2",
-  "description": "JSPM Hot-Reload Server - Hot-Reload made for dummies!",
-  "main": "./lib/server.js",
+  "version": "0.2.0",
+  "description": "SystemJS Hot-Reload Server made for dummies!",
+  "main": "./bin/jspm-hot-reload-server",
   "scripts": {
+    "start": "node ./bin/jspm-hot-reload-server",
     "lint": "eslint bin/* lib/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,18 +14,19 @@
   },
   "keywords": [
     "jspm",
-    "systemjs",
+    "server",
     "hot",
-    "reload",
+    "http",
+    "systemjs",
     "reloader",
+    "reload",
     "loader",
     "module",
     "replacement",
     "hmr",
-    "http",
-    "server",
     "development",
-    "react"
+    "react",
+    "dummies"
   ],
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
   "license": "Apache-2.0",
@@ -33,6 +35,7 @@
   },
   "homepage": "https://github.com/piotrwitek/jspm-hot-reload-server#readme",
   "dependencies": {
+    "async": "^2.0.0-rc.6",
     "chokidar-socket-emitter": "^0.5.2",
     "commander": "^2.9.0",
     "http-server": "^0.9.0",

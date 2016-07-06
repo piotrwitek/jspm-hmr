@@ -12,7 +12,6 @@
         "array-bracket-spacing": "error",
         "array-callback-return": "error",
         "arrow-body-style": "error",
-        "arrow-parens": "error",
         "arrow-spacing": "error",
         "block-scoped-var": "error",
         "block-spacing": "error",
