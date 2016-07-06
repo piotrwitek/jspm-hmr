@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>jspm-hot-reload-server</title>
+</head>
+
+<body>
+  <div id="app-container">
+  </div>
+  <!-- scripts bottom section -->
+  <script src="/jspm_packages/system.js"></script>
+  <script type="text/javascript">
+    System.import('systemjs-hot-reloader').then(function(HotReloader) {
+      new HotReloader.default('http://localhost:8888'); // chokidar-socket-emitter port
+    });
+  </script>
+</body>
+
+</html>

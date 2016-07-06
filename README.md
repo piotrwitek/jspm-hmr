@@ -1,20 +1,24 @@
 # JSPM Hot-Reload Server
-
 > Hot-Reload made for dummies!
+_Node.js Package_
 
-Node.js Package
+### How it works
+Watches specified files for changes in chosen path, sends events through web sockets to your client to reload only the JavaScript modules that has changed.
+Uses [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) on the client.
 
 Dependencies:
-- http-server
-- chokidar-socket-emitter
-
+- [http-server](https://github.com/indexzero/http-server)
+- [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter)
+- [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
 ---
 ### Install
 
 ```
 $ npm install jspm-hot-reload-server [--save-dev]
 ```
-> Tip: You can install globally using -g flag
+> Tip: You can install globally using -g flag so you can use it outside project
+
+> Pro-tip: You can run server with --init flag to initialize boilerplate index.html with hot-reload setup
 
 ---
 ### Usage
@@ -27,6 +31,7 @@ $ jspm-hot-reload-server [path] [options]
 
     -h, --help              output usage information
     -V, --version           output the version number
+    -I, --init              initialize boilerplate index.html with client hot-reload setup
     -O, --open              automatically open browser (defaults to false)
     -C, --caching [number]  enable caching with max-age= (defaults to -1)
     -P, --port <number>     port number (defaults to 8888)
@@ -40,7 +45,7 @@ $ jspm-hot-reload-server . -O
 
 2. Start server in "dist" sub-folder on port 4444 and caching set to 3600 sec
 ```
-$ jspm-hot-reload-server "dist" --port 4444 -C 3600
+$ jhrs "dist" --port 4444 -C 3600
 ```
 
 ---

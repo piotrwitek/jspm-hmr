@@ -4,7 +4,6 @@
   "description": "JSPM Hot-Reload Server - Hot-Reload made for dummies!",
   "main": "./lib/server.js",
   "scripts": {
-    "start": "node ./lib/server.js",
     "lint": "eslint bin/* lib/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +16,7 @@
     "systemjs",
     "hot",
     "reload",
+    "reloader",
     "loader",
     "module",
     "replacement",
@@ -35,10 +35,10 @@
   "dependencies": {
     "chokidar-socket-emitter": "^0.5.2",
     "commander": "^2.9.0",
-    "http-server": "^0.9.0"
+    "http-server": "^0.9.0",
+    "systemjs-hot-reloader": "^0.5.8"
   },
   "bin": {
-    "jspm-hot-reload-server": "./bin/jspm-hot-reload-server",
-    "jhrs": "./bin/jspm-hot-reload-server"
+    "jspm-hot-reload-server": "./bin/jspm-hot-reload-server"
   }
 }

@@ -18,7 +18,7 @@
 
 'use strict';
 
-const jspmServer = require('../lib/server'),
+const jspmServer = require('../lib/jspm-server'),
   opener = require('opener'),
   program = require('commander'),
   packageJson = require('../package.json');
@@ -27,6 +27,7 @@ program
   .version(packageJson.version)
   .description(packageJson.description)
   .usage('[path] [options]')
+  .option('-I, --init', 'initialize boilerplate index.html with client hot-reload setup')
   .option('-O, --open', 'automatically open browser (defaults to false)')
   .option('-C, --caching [number]', 'enable caching with max-age= (defaults to -1)', parseInt)
   .option('-P, --port <number>', 'port number (defaults to 8888)', parseInt)
