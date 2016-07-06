@@ -2,6 +2,8 @@
 
 > Hot-Reload made for dummies!
 
+Node.js Package
+
 Dependencies:
 - http-server
 - chokidar-socket-emitter
@@ -10,15 +12,37 @@ Dependencies:
 ### Install
 
 ```
-$ npm install jspm-hot-reload-server [-g]
+$ npm install jspm-hot-reload-server [--save-dev]
 ```
+> Tip: You can install globally using -g flag
 
 ---
 ### Usage
 
 ```
-$ [./node_modules/.bin/]jspm-hot-reload-server [path] [options]
+$ jspm-hot-reload-server [path] [options]
 ```
+
+  Options:
+
+    -h, --help              output usage information
+    -V, --version           output the version number
+    -O, --open              automatically open browser (defaults to false)
+    -C, --caching [number]  enable caching with max-age= (defaults to -1)
+    -P, --port <number>     port number (defaults to 8888)
+
+### Examples
+
+1. Start server in CWD & open in last active browser window
+```
+$ jspm-hot-reload-server . -O
+```
+
+2. Start server in "dist" sub-folder on port 4444 and caching set to 3600 sec
+```
+$ jspm-hot-reload-server "dist" --port 4444 -C 3600
+```
+
 ---
 ### License
 

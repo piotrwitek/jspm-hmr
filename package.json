@@ -15,10 +15,16 @@
   "keywords": [
     "jspm",
     "systemjs",
-    "hot-reload",
+    "hot",
+    "reload",
+    "loader",
+    "module",
+    "replacement",
+    "hmr",
     "http",
     "server",
-    "development"
+    "development",
+    "react"
   ],
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
   "license": "Apache-2.0",
