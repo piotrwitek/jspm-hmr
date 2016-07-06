@@ -1,6 +1,7 @@
 # JSPM Hot-Reload Server
 > Hot-Reload made for dummies!
-_Node.js Package_
+
+Package for Node.js
 
 ### How it works
 Watches specified files for changes in chosen path, sends events through web sockets to your client to reload only the JavaScript modules that has changed.
@@ -10,6 +11,7 @@ Dependencies:
 - [http-server](https://github.com/indexzero/http-server)
 - [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter)
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
+
 ---
 ### Install
 
@@ -38,12 +40,12 @@ $ jspm-hot-reload-server [path] [options]
 
 ### Examples
 
-1. Start server in CWD & open in last active browser window
+- Start server in CWD & open in last active browser window
 ```
 $ jspm-hot-reload-server . -O
 ```
 
-2. Start server in "dist" sub-folder on port 4444 and caching set to 3600 sec
+- Start server in "dist" sub-folder on port 4444 and caching set to 3600 sec
 ```
 $ jhrs "dist" --port 4444 -C 3600
 ```
