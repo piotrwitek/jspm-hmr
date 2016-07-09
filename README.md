@@ -1,62 +1,75 @@
-# JSPM Hot-Reload Server
-> SystemJS Hot-Reload Server made for dummies!
+# JSPM (SystemJS) Hot-Module-Reload
+> Hot-Module-Reload made for dummies!
 
-Package for Node.js
+_Package for Node.js, written in TypeScript with async/await._
+_Designed to use with JSPM or SystemJS._
+_Using [SystemJS](https://github.com/systemjs/systemjs) for Universal (ES6) Module Loading Support._
 
----
-
-### Features
-- Use --init flag to create boilerplate index.html with hot-reload setup included, then simply start server and hack your app
-
-
-### How it works
-Watches specified files for changes in chosen path, sends events through web sockets to your client to reload only the JavaScript modules that has changed.
-Uses [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) on the client.
-
-Dependencies:
-- [http-server](https://github.com/indexzero/http-server)
-- [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter)
-- [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
+### Quick Start for Dummies :)
+```
+$ npm install jspm-hmr --save-dev
+$ ./node_modules/.bin/jspm-hmr --init
+$ npm start
+```
+Now make some changes in "src/app.js" file and save it to see hot-module-reload in action!
+You should use ES6 Modules (import/export) for future-proof code: http://exploringjs.com/es6/ch_modules.html
 
 ---
 
 ### Install
 
 ```
-$ npm install jspm-hot-reload-server [--save-dev]
+$ npm install jspm-hmr [--save-dev]
 ```
-> Tip: You can install globally using -g flag so you can use it outside project
+> Tip: You can install it globally using -g flag so you can use it as simple http server in any directory on your machine
 
-> Pro-tip: You can run server with --init flag to initialize boilerplate index.html with hot-reload setup included
+> Pro-tip: You can use --init flag to initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS
 
 ---
 
 ### Usage
-
 ```
-$ jspm-hot-reload-server [path] [options]
+$ jspm-hmr [path] [options]
 ```
-
-  Options:
+ Options:
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -I, --init              initialize boilerplate index.html with hot-reload setup included
+    -I, --init              initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS
     -O, --open              automatically open browser (defaults to false)
-    -C, --caching [number]  enable caching with max-age= (defaults to -1)
     -P, --port <number>     port number (defaults to 8888)
+    -C, --caching [number]  enable caching with max-age= (defaults to -1)
 
-### Examples
+### Examples:
+- Initialize your project with hot-module-reload configuration in cwd
+```
+$ jspm-hmr -I
+```
 
-- Start server in CWD & open in last active browser window
+- Start dev server in CWD & open in last active browser window
 ```
-$ jspm-hot-reload-server . -O
+$ jspm-hmr . -O
 ```
 
-- Start server in "dist" sub-folder on port 4444 and caching set to 3600 sec
+- Start dev server in "dist" sub-folder on port 4444 and caching set to 3600 sec
 ```
-$ jhrs "dist" --port 4444 -C 3600
+$ jspm-hmr "dist" -P 4444 -C 3600
 ```
+
+---
+
+### How it works
+Watches specified files for changes in chosen path and emits events through web sockets on changes to your client to reload that particular JavaScript modules that has changed.
+-I or --init flag initialize index.html and server.js in your project with automatic hot-module-reload configuration for easy setup.
+
+Under the hood it uses great [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) with [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter).
+
+---
+
+### Dependencies:
+- [http-server](https://github.com/indexzero/http-server)
+- [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter)
+- [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
 
 ---
 

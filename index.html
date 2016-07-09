@@ -25,13 +25,15 @@
       </div>
     </div>
   </div>
-  <!-- scripts bottom section -->
+  <!-- body bottom scripts -->
   <script src="/jspm_packages/system.js"></script>
   <script type="text/javascript">
     System.import('systemjs-hot-reloader').then(function(HotReloader) {
       // if you're running server on custom port please remember to update below
       new HotReloader.default('http://localhost:8888');
     });
+    // load main module of your app
+    System.import('src/app');
   </script>
 </body>
 
