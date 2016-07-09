@@ -38,5 +38,5 @@ typings
 .node_repl_history
 
 # Custom
-dist
+#dist
 .DS_Store
