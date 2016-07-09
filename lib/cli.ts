@@ -61,22 +61,26 @@ async function main() {
 }
 
 async function initProcedure() {
-  const indexFiles = ['index.html', 'loader-style.css', 'app.js'];
+  const indexFiles = ['index.html', 'loader-style.css', 'src/app.js'];
   const serverFiles = ['server.js'];
-
   let confirmedFiles = [];
+
+  // ask to confirm cwd TODO
+
   // check files if exists the ask for confirmation to overwrite
   try {
     // ask to init index TODO
     for (let file of indexFiles) {
-      if (await checkFileExistsConfirmOverwrite(file)) {
-        confirmedFiles.push(file);
+      const targetPath = path.join(process.cwd(), path.sep, file);
+      if (await checkFileExistsConfirmOverwrite(targetPath)) {
+        confirmedFiles.push(targetPath);
       };
     }
     // ask to init server TODO
     for (let file of serverFiles) {
-      if (await checkFileExistsConfirmOverwrite(file)) {
-        confirmedFiles.push(file);
+      const targetPath = path.join(process.cwd(), path.sep, file);
+      if (await checkFileExistsConfirmOverwrite(targetPath)) {
+        confirmedFiles.push(targetPath);
       };
     }
   } catch (err) {
