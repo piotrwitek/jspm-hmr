@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>jspm-hot-reload-server</title>
+  <title>jspm-hmr</title>
   <link rel="stylesheet" href="loader-style.css">
 </head>
 
@@ -27,6 +27,7 @@
   </div>
   <!-- body bottom scripts -->
   <script src="/jspm_packages/system.js"></script>
+  <script src="/jspm.config.js"></script>
   <script type="text/javascript">
     System.import('systemjs-hot-reloader').then(function(HotReloader) {
       // if you're running server on custom port please remember to update below

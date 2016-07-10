@@ -1,9 +1,11 @@
 # JSPM (SystemJS) Hot-Module-Reload
-> Hot-Module-Reload made for dummies!
+> Hot-Module-Reload - made for dummies!
 
-_Package for Node.js, written in TypeScript with async/await._  
-_Designed to use with JSPM or SystemJS._  
+_Node.js package, written in TypeScript with async/await to fabuously deal with Node.js callback hell._  
+_Designed to hot-reload ReactJS Components during development._  
 _Using [SystemJS](https://github.com/systemjs/systemjs) for Universal (ES6) Module Loading Support._  
+_Provide initialize procedure which create basic project files (index.html, src/app.js, server.js) with complete Hot-Module-Reload setup and HTTP dev server ready to start with simple "npm start" command._
+
 
 ### Quick Start for Dummies :)
 ```
@@ -36,7 +38,7 @@ $ jspm-hmr [path] [options]
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -I, --init              initialize your project with index.html, app.js, server.js files with hot-module-reload
+    -I, --init              initialize files configured with hot-module-reload (index.html, app.js, server.js)
     -O, --open              automatically open browser (defaults to false)
     -P, --port <number>     port number (defaults to 8888)
     -C, --caching [number]  enable caching with max-age= (defaults to -1)

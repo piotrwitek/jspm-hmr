@@ -33,7 +33,7 @@ program
   .version(packageVersion)
   .description(packageDescription + '\n  Version: ' + packageVersion)
   .usage('[path] [options]')
-  .option('-I, --init', 'initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS')
+  .option('-I, --init', 'initialize files configured with hot-module-reload (index.html, app.js, server.js)')
   .option('-O, --open', 'automatically open browser (defaults to false)')
   .option('-P, --port <number>', 'port number (defaults to 8888)', parseInt)
   .option('-C, --cache [number]', 'enable Cache-Control with max-age=number (defaults to -1)', parseInt)
