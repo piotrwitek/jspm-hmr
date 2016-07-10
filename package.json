@@ -19,8 +19,7 @@
     "test": "echo \"Yet no tests was needed.\"",
     "precommit": "npm run lint",
     "prepush": "npm run lint && npm test",
-    "prepublish": "npm run test && npm run build",
-    "postinstall": "typings install"
+    "prepublish": "npm run test && npm run build"
   },
   "repository": {
     "type": "git",
