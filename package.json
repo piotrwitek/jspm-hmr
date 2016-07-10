@@ -5,6 +5,12 @@
   "description": "JSPM (SystemJS) Hot-Module-Reload - made for dummies!",
   "main": "dist/jspm-hmr-server.js",
   "bin": "dist/cli.js",
+  "files": [
+    "boilerplate/",
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "ts-node -P lib lib/cli.ts -I",
     "clean": "rimraf node_modules",

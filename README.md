@@ -1,9 +1,9 @@
 # JSPM (SystemJS) Hot-Module-Reload
 > Hot-Module-Reload made for dummies!
 
-_Package for Node.js, written in TypeScript with async/await._
-_Designed to use with JSPM or SystemJS._
-_Using [SystemJS](https://github.com/systemjs/systemjs) for Universal (ES6) Module Loading Support._
+_Package for Node.js, written in TypeScript with async/await._  
+_Designed to use with JSPM or SystemJS._  
+_Using [SystemJS](https://github.com/systemjs/systemjs) for Universal (ES6) Module Loading Support._  
 
 ### Quick Start for Dummies :)
 ```
@@ -11,8 +11,8 @@ $ npm install jspm-hmr --save-dev
 $ ./node_modules/.bin/jspm-hmr --init
 $ npm start
 ```
-Now make some changes in "src/app.js" file and save it to see hot-module-reload in action!
-You should use ES6 Modules (import/export) for future-proof code: http://exploringjs.com/es6/ch_modules.html
+Now make some changes in "src/app.js" file and save to see hot-module-reload in action!  
+Always try to use ES6 Modules (import/export) for future-proof code: http://exploringjs.com/es6/ch_modules.html  
 
 ---
 
@@ -21,9 +21,10 @@ You should use ES6 Modules (import/export) for future-proof code: http://explori
 ```
 $ npm install jspm-hmr [--save-dev]
 ```
+
 > Tip: You can install it globally using -g flag so you can use it as simple http server in any directory on your machine
 
-> Pro-tip: You can use --init flag to initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS
+> Pro-Tip: You can use --init flag to initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS
 
 ---
 
@@ -35,10 +36,12 @@ $ jspm-hmr [path] [options]
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -I, --init              initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS
+    -I, --init              initialize your project with index.html, app.js, server.js files with hot-module-reload
     -O, --open              automatically open browser (defaults to false)
     -P, --port <number>     port number (defaults to 8888)
     -C, --caching [number]  enable caching with max-age= (defaults to -1)
+
+---
 
 ### Examples:
 - Initialize your project with hot-module-reload configuration in cwd
