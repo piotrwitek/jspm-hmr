@@ -51,6 +51,7 @@
     "chokidar-socket-emitter": "^0.5.2",
     "commander": "^2.9.0",
     "http-server": "^0.9.0",
+    "opener": "^1.4.1",
     "systemjs-hot-reloader": "^0.5.8"
   },
   "devDependencies": {
