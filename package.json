@@ -1,6 +1,6 @@
 {
   "name": "jspm-hmr",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "preferGlobal": true,
   "description": "JSPM (SystemJS) Hot-Module-Reload - made for dummies!",
   "main": "dist/jspm-hmr-server.js",
