@@ -1,6 +1,6 @@
 {
   "name": "jspm-hmr",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "preferGlobal": true,
   "description": "JSPM (SystemJS) Hot-Module-Reload - made for dummies!",
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
