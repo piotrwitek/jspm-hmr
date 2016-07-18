@@ -3,7 +3,16 @@
   "version": "0.4.2",
   "preferGlobal": true,
   "description": "JSPM (SystemJS) Hot-Module-Reload - made for dummies!",
+  "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/piotrwitek/jspm-hmr",
+  "bugs": "https://github.com/piotrwitek/jspm-hmr/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piotrwitek/jspm-hmr.git"
+  },
   "main": "dist/jspm-hmr-server.js",
+  "typings": "dist/jspm-hmr-server.d.ts",
   "bin": "dist/cli.js",
   "files": [
     "boilerplate/",
@@ -21,32 +30,6 @@
     "prepush": "npm run lint && npm test",
     "prepublish": "npm run test && npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/piotrwitek/jspm-hmr.git"
-  },
-  "keywords": [
-    "systemjs",
-    "jspm",
-    "http",
-    "server",
-    "hot",
-    "reload",
-    "reloader",
-    "loader",
-    "module",
-    "replacement",
-    "hmr",
-    "development",
-    "react",
-    "dummies"
-  ],
-  "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/piotrwitek/jspm-hmr/issues"
-  },
-  "homepage": "https://github.com/piotrwitek/jspm-hmr",
   "dependencies": {
     "chokidar-socket-emitter": "^0.5.2",
     "commander": "^2.9.0",
@@ -60,5 +43,20 @@
     "ts-node": "^0.9.3",
     "tslint": "^3.13.0",
     "typings": "^1.3.1"
-  }
+  },
+  "keywords": [
+    "systemjs",
+    "jspm",
+    "http",
+    "server",
+    "hot-reload",
+    "hmr",
+    "live",
+    "hot",
+    "module",
+    "reload",
+    "replacement",
+    "react",
+    "dummies"
+  ]
 }
