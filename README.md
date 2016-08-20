@@ -1,10 +1,14 @@
 # JSPM (SystemJS) Hot-Module-Reload
 > Hot-Module-Reload - made for dummies!
 
-_Node.js package, written in TypeScript with async/await to fabuously deal with Node.js callback hell._  
-_Designed to hot-reload ReactJS Components during development._  
-_Using [SystemJS](https://github.com/systemjs/systemjs) for Universal (ES6) Module Loading Support._  
-_Provide initialize procedure which create basic project files (index.html, src/app.js, server.js) with complete Hot-Module-Reload setup and HTTP dev server ready to start with simple "npm start" command._
+_Sources for Node.js package (written in TypeScript)._  
+
+### Features
+- Works great out-of-the-box - no setup!
+- Init procedure - inject fresh project with (index.html, src/app.js, server.js) and live-reload dev server
+- Hot-reload ReactJS Components during development
+- Live-reload other resources like styles (CSS, SCSS), assets or HTML files through System.js plugins
+- Leveraging [SystemJS](https://github.com/systemjs/systemjs) for Universal (ES6) Module Loading Support
 
 
 ### Quick Start for Dummies :)
