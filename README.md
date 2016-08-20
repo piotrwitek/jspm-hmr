@@ -1,7 +1,7 @@
 # JSPM (SystemJS) Hot-Module-Reload
 > Hot-Module-Reload - made for dummies!
 
-_Sources for Node.js package (written in TypeScript)._  
+_Sources for Node.js package (written in TypeScript):_ https://www.npmjs.com/package/jspm-hmr
 
 ### Features
 - Works great out-of-the-box - no setup!
