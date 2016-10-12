@@ -33,7 +33,7 @@ export function start(options) {
   const cache = options.caching || -1;
   const open = options.open || false;
   const command = options.command || null;
-  const server = createServer(path, cache);
+  const server = createServer(path, cache, options.proxy);
 
   logOptionsInfo(packageVersion, nodeEnv, cache);
 
@@ -55,11 +55,12 @@ export function start(options) {
   return server;
 }
 
-function createServer(path, cache) {
+function createServer(path, cache, proxy) {
   return httpServer.createServer({
     root: path,
     cache: cache,
     robots: true,
+    proxy: proxy,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true'
