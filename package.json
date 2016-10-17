@@ -24,7 +24,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "start": "ts-node -P lib lib/cli.ts -I",
+    "start": "ts-node -P lib lib/cli.ts --",
     "clean": "rimraf node_modules",
     "build": "rimraf dist && tsc -p lib",
     "lint": "tslint lib/**/*.ts",
