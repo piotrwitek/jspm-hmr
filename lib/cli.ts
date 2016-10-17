@@ -113,7 +113,7 @@ async function checkFileExistsConfirmOverwrite(file) {
 
 function checkFileExists(file: any): Promise<any> {
   return new Promise((resolve, reject) => {
-    fs.access(file, fs.W_OK, (err) => {
+    fs.access(file, fs.constants.W_OK, (err) => {
       if (err) {
         resolve(false);
       }
@@ -153,15 +153,15 @@ function processFileFinally(err) {
 
 // exit hooks
 if (process.platform === 'win32') {
-  rl.on('SIGINT', function() {
+  rl.on('SIGINT', function () {
     process.emit('SIGINT');
   });
 }
-process.on('SIGINT', function() {
+process.on('SIGINT', function () {
   console.log('\n\nhttp-server stopped!');
   process.exit();
 });
-process.on('SIGTERM', function() {
+process.on('SIGTERM', function () {
   console.log('\n\nhttp-server stopped!');
   process.exit();
 });
