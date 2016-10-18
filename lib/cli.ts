@@ -15,9 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+
 'use strict';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as mkdirp from 'mkdirp';
 import * as readline from 'readline';
 import * as jspmHmrServer from './jspm-hmr-server';
 
@@ -61,49 +63,46 @@ async function main() {
 }
 
 async function initProcedure() {
-  const indexFiles = ['index.html', 'loader-style.css', 'src/app.js'];
+  const targetRoot = process.cwd();
+  const sourceRoot = path.join(__dirname, '../boilerplate');
+  const clientFiles = ['index.html', 'assets/loader-style.css', 'src/app.js', 'src/es6module.js'];
   const serverFiles = ['server.js'];
-  let confirmedFiles = [];
+  let confirmedTargets = [];
 
-  // ask to confirm cwd TODO
+  // confirm targetRoot folder
+  console.log('  Initialization directory -> ' + targetRoot);
+  const confirmed = await askConfirmationPromise('  - Is path correct?');
+
+  if (!confirmed) {
+    console.log('  Initialization aborted.');
+    return;
+  }
 
   // check files if exists the ask for confirmation to overwrite
   try {
-    // ask to init index TODO
-    for (let file of indexFiles) {
-      const targetPath = path.join(process.cwd(), path.sep, file);
+    const files = [...clientFiles, ...serverFiles];
+    for (let file of files) {
+      const sourcePath = path.join(sourceRoot, file);
+      const targetPath = path.join(targetRoot, file);
       if (await checkFileExistsConfirmOverwrite(targetPath)) {
-        confirmedFiles.push(targetPath);
-      };
-    }
-    // ask to init server TODO
-    for (let file of serverFiles) {
-      const targetPath = path.join(process.cwd(), path.sep, file);
-      if (await checkFileExistsConfirmOverwrite(targetPath)) {
-        confirmedFiles.push(targetPath);
+        await copyFilePromise(sourcePath, targetPath);
       };
     }
   } catch (err) {
     console.log(err);
   }
 
-  // process index files
-  // process server files
-  // process finally
 }
 
 async function checkFileExistsConfirmOverwrite(file) {
-  const exist = await checkFileExists(file);
+  const exist = await checkFileExistsPromise(file);
 
   if (exist) {
-    console.log(`File "${file}" already exists.`);
-    const confirmed = await askConfirmOverwrite();
+    console.log(`  File "${file}" already exists.`);
+    const confirmed = await askConfirmationPromise('  - Overwrite?');
 
-    if (confirmed) {
-      console.info('  Overwritten');
-    } else {
+    if (!confirmed) {
       console.log('  Skipped');
-
       return false;
     }
   }
@@ -111,9 +110,9 @@ async function checkFileExistsConfirmOverwrite(file) {
   return true;
 }
 
-function checkFileExists(file: any): Promise<any> {
+function checkFileExistsPromise(file: any): Promise<any> {
   return new Promise((resolve, reject) => {
-    fs.access(file, fs.W_OK, (err) => {
+    fs.access(file, fs.constants.W_OK, (err) => {
       if (err) {
         resolve(false);
       }
@@ -122,46 +121,57 @@ function checkFileExists(file: any): Promise<any> {
   });
 }
 
-function askConfirmOverwrite() {
+function askConfirmationPromise(msg) {
   return new Promise((resolve, reject) => {
-    rl.question('  Overwrite? [yes]/no: ', (answer) => {
-      if (answer === 'no') {
-        resolve(false);
-      } else {
+    rl.question(msg + ' (Y)/n: ', (answer) => {
+      const parsed = answer.toString().toLowerCase();
+      if (parsed === 'y' || parsed === '') {
         resolve(true);
+      } else {
+        resolve(false);
       }
     });
   });
 }
 
-function processFile(fileName, done) {
-  const source = path.join(__dirname, '/../', fileName);
-  const target = path.join(process.cwd(), path.sep, fileName);
+function copyFilePromise(source: string, target: string) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(source, (err, data) => {
+      if (err) reject(err);
 
-  // logic TODO
+      mkdirp(path.dirname(target), function (err) {
+        if (err) reject(err);
 
-  done();
+        fs.writeFile(target, data, (err) => {
+          if (err) reject(err);
+
+          console.log('  - %s -> %s', source, target);
+          resolve(true);
+        });
+      });
+    });
+  });
 }
 
 function processFileFinally(err) {
   if (err) {
     console.log('\n Boilerplate initialization failed.');
   } else {
-    console.log('\n  Boilerplate initialization completed in current directory.');
+    console.log('\n Boilerplate initialization completed.');
   }
 }
 
 // exit hooks
 if (process.platform === 'win32') {
-  rl.on('SIGINT', function() {
+  rl.on('SIGINT', function () {
     process.emit('SIGINT');
   });
 }
-process.on('SIGINT', function() {
+process.on('SIGINT', function () {
   console.log('\n\nhttp-server stopped!');
   process.exit();
 });
-process.on('SIGTERM', function() {
+process.on('SIGTERM', function () {
   console.log('\n\nhttp-server stopped!');
   process.exit();
 });

@@ -1,5 +1,5 @@
 'use strict';
-const jspmHmrServer = require('jspm-hmr-server');
+const jspmHmrServer = require('jspm-hmr');
 const options = {
   open: true
 };

@@ -1,5 +1,3 @@
-/// <reference path="../typings/index"/>
-
 declare module 'chokidar-socket-emitter' {
   const main: (options: { app: any }) => void;
   export default main;
