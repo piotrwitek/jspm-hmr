@@ -65,7 +65,7 @@ async function main() {
 async function initProcedure() {
   const targetRoot = process.cwd();
   const sourceRoot = path.join(__dirname, '../boilerplate');
-  const clientFiles = ['index.html', 'assets/loader-style.css', 'src/app.js'];
+  const clientFiles = ['index.html', 'assets/loader-style.css', 'src/app.js', 'src/es6module.js'];
   const serverFiles = ['server.js'];
   let confirmedTargets = [];
 
