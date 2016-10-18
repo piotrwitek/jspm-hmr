@@ -61,35 +61,37 @@ async function main() {
 }
 
 async function initProcedure() {
-  const indexFiles = ['index.html', 'loader-style.css', 'src/app.js'];
+  const targetRoot = process.cwd();
+  const sourceRoot = path.join(__dirname, '../boilerplate');
+  const clientFiles = ['index.html', 'loader-style.css', 'src/app.js'];
   const serverFiles = ['server.js'];
-  let confirmedFiles = [];
+  let confirmedTargets = [];
 
-  // ask to confirm cwd TODO
+  // confirm targetRoot folder
+  console.log('  Initialization directory -> ' + targetRoot);
+  const confirmed = await askConfirmation('  Is path correct?');
+
+  if (!confirmed) {
+    console.log('  Initialization aborted.');
+    return;
+  }
+
 
   // check files if exists the ask for confirmation to overwrite
   try {
-    // ask to init index TODO
-    for (let file of indexFiles) {
-      const targetPath = path.join(process.cwd(), path.sep, file);
+    const files = [...clientFiles, ...serverFiles];
+    for (let file of files) {
+      const targetPath = path.join(targetRoot, file);
       if (await checkFileExistsConfirmOverwrite(targetPath)) {
-        confirmedFiles.push(targetPath);
-      };
-    }
-    // ask to init server TODO
-    for (let file of serverFiles) {
-      const targetPath = path.join(process.cwd(), path.sep, file);
-      if (await checkFileExistsConfirmOverwrite(targetPath)) {
-        confirmedFiles.push(targetPath);
+        confirmedTargets.push(targetPath);
       };
     }
   } catch (err) {
     console.log(err);
   }
 
-  // process index files
-  // process server files
-  // process finally
+  // console.log(confirmedTargets);
+  // copy files
 }
 
 async function checkFileExistsConfirmOverwrite(file) {
@@ -97,7 +99,7 @@ async function checkFileExistsConfirmOverwrite(file) {
 
   if (exist) {
     console.log(`File "${file}" already exists.`);
-    const confirmed = await askConfirmOverwrite();
+    const confirmed = await askConfirmation('  Overwrite?');
 
     if (confirmed) {
       console.info('  Overwritten');
@@ -122,23 +124,22 @@ function checkFileExists(file: any): Promise<any> {
   });
 }
 
-function askConfirmOverwrite() {
+function askConfirmation(msg) {
   return new Promise((resolve, reject) => {
-    rl.question('  Overwrite? [yes]/no: ', (answer) => {
-      if (answer === 'no') {
-        resolve(false);
-      } else {
+    rl.question(msg + ' [yes]/no: ', (answer) => {
+      const parsed = answer.toString().toLowerCase();
+      if (parsed === 'yes' || parsed === 'y') {
         resolve(true);
+      } else {
+        resolve(false);
       }
     });
   });
 }
 
 function processFile(fileName, done) {
-  const source = path.join(__dirname, '/../', fileName);
-  const target = path.join(process.cwd(), path.sep, fileName);
 
-  // logic TODO
+
 
   done();
 }
@@ -147,7 +148,7 @@ function processFileFinally(err) {
   if (err) {
     console.log('\n Boilerplate initialization failed.');
   } else {
-    console.log('\n  Boilerplate initialization completed in current directory.');
+    console.log('\n Boilerplate initialization completed.');
   }
 }
 
