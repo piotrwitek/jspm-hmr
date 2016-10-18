@@ -37,10 +37,12 @@
     "chokidar-socket-emitter": "^0.5.2",
     "commander": "^2.9.0",
     "http-server": "^0.9.0",
+    "mkdirp": "^0.5.1",
     "opener": "^1.4.1",
     "systemjs-hot-reloader": "^0.6.0"
   },
   "devDependencies": {
+    "@types/mkdirp": "^0.3.29",
     "@types/node": "^6.0.45",
     "husky": "^0.11.4",
     "rimraf": "^2.5.3",

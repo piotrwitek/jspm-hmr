@@ -15,9 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+
 'use strict';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as mkdirp from 'mkdirp';
 import * as readline from 'readline';
 import * as jspmHmrServer from './jspm-hmr-server';
 
@@ -69,7 +71,7 @@ async function initProcedure() {
 
   // confirm targetRoot folder
   console.log('  Initialization directory -> ' + targetRoot);
-  const confirmed = await askConfirmationPromise('  Is path correct?');
+  const confirmed = await askConfirmationPromise('  - Is path correct?');
 
   if (!confirmed) {
     console.log('  Initialization aborted.');
@@ -80,17 +82,15 @@ async function initProcedure() {
   try {
     const files = [...clientFiles, ...serverFiles];
     for (let file of files) {
+      const sourcePath = path.join(sourceRoot, file);
       const targetPath = path.join(targetRoot, file);
       if (await checkFileExistsConfirmOverwrite(targetPath)) {
-        confirmedTargets.push(targetPath);
+        await copyFilePromise(sourcePath, targetPath);
       };
     }
   } catch (err) {
     console.log(err);
   }
-
-  // console.log(confirmedTargets);
-  // copy files
 
 }
 
@@ -98,14 +98,11 @@ async function checkFileExistsConfirmOverwrite(file) {
   const exist = await checkFileExistsPromise(file);
 
   if (exist) {
-    console.log(`File "${file}" already exists.`);
-    const confirmed = await askConfirmationPromise('  Overwrite?');
+    console.log(`  File "${file}" already exists.`);
+    const confirmed = await askConfirmationPromise('  - Overwrite?');
 
-    if (confirmed) {
-      console.info('  Overwritten');
-    } else {
+    if (!confirmed) {
       console.log('  Skipped');
-
       return false;
     }
   }
@@ -126,9 +123,9 @@ function checkFileExistsPromise(file: any): Promise<any> {
 
 function askConfirmationPromise(msg) {
   return new Promise((resolve, reject) => {
-    rl.question(msg + ' [yes]/no: ', (answer) => {
+    rl.question(msg + ' (Y)/n: ', (answer) => {
       const parsed = answer.toString().toLowerCase();
-      if (parsed === 'yes' || parsed === 'y') {
+      if (parsed === 'y' || parsed === '') {
         resolve(true);
       } else {
         resolve(false);
@@ -137,11 +134,21 @@ function askConfirmationPromise(msg) {
   });
 }
 
-function copyFilePromise(source, target) {
+function copyFilePromise(source: string, target: string) {
   return new Promise((resolve, reject) => {
     fs.readFile(source, (err, data) => {
-      if (err) throw err;
-      console.log(data);
+      if (err) reject(err);
+
+      mkdirp(path.dirname(target), function (err) {
+        if (err) reject(err);
+
+        fs.writeFile(target, data, (err) => {
+          if (err) reject(err);
+
+          console.log('  - %s -> %s', source, target);
+          resolve(true);
+        });
+      });
     });
   });
 }
