@@ -63,19 +63,18 @@ async function main() {
 async function initProcedure() {
   const targetRoot = process.cwd();
   const sourceRoot = path.join(__dirname, '../boilerplate');
-  const clientFiles = ['index.html', 'loader-style.css', 'src/app.js'];
+  const clientFiles = ['index.html', 'assets/loader-style.css', 'src/app.js'];
   const serverFiles = ['server.js'];
   let confirmedTargets = [];
 
   // confirm targetRoot folder
   console.log('  Initialization directory -> ' + targetRoot);
-  const confirmed = await askConfirmation('  Is path correct?');
+  const confirmed = await askConfirmationPromise('  Is path correct?');
 
   if (!confirmed) {
     console.log('  Initialization aborted.');
     return;
   }
-
 
   // check files if exists the ask for confirmation to overwrite
   try {
@@ -92,14 +91,15 @@ async function initProcedure() {
 
   // console.log(confirmedTargets);
   // copy files
+
 }
 
 async function checkFileExistsConfirmOverwrite(file) {
-  const exist = await checkFileExists(file);
+  const exist = await checkFileExistsPromise(file);
 
   if (exist) {
     console.log(`File "${file}" already exists.`);
-    const confirmed = await askConfirmation('  Overwrite?');
+    const confirmed = await askConfirmationPromise('  Overwrite?');
 
     if (confirmed) {
       console.info('  Overwritten');
@@ -113,7 +113,7 @@ async function checkFileExistsConfirmOverwrite(file) {
   return true;
 }
 
-function checkFileExists(file: any): Promise<any> {
+function checkFileExistsPromise(file: any): Promise<any> {
   return new Promise((resolve, reject) => {
     fs.access(file, fs.constants.W_OK, (err) => {
       if (err) {
@@ -124,7 +124,7 @@ function checkFileExists(file: any): Promise<any> {
   });
 }
 
-function askConfirmation(msg) {
+function askConfirmationPromise(msg) {
   return new Promise((resolve, reject) => {
     rl.question(msg + ' [yes]/no: ', (answer) => {
       const parsed = answer.toString().toLowerCase();
@@ -137,11 +137,13 @@ function askConfirmation(msg) {
   });
 }
 
-function processFile(fileName, done) {
-
-
-
-  done();
+function copyFilePromise(source, target) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(source, (err, data) => {
+      if (err) throw err;
+      console.log(data);
+    });
+  });
 }
 
 function processFileFinally(err) {
