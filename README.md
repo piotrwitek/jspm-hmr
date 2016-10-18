@@ -11,16 +11,14 @@ _Node.js package (written in TypeScript):_ https://www.npmjs.com/package/jspm-hm
 - Live-reload resources like styles (CSS, SCSS), static assets or HTML files through System.js plugins
 - Leveraging [SystemJS](https://github.com/systemjs/systemjs) for Universal Module Loading Support
 
-### Quick Start for Dummies :)
+### Quick Start _CRAZY-ONE-LINER_ :)
 __Start from scratch new Babel or TypeScript App using just few simple npm commands!__
 ```
-$ npm i jspm@beta jspm-hmr -D
-$ ./node_modules/.bin/jspm init
-$ ./node_modules/.bin/jspm i systemjs-hot-reloader
-$ ./node_modules/.bin/jspm-hmr -I
-$ npm start
+npm i jspm@beta jspm-hmr -D && ./node_modules/.bin/jspm init && ./node_modules/.bin/jspm i systemjs-hot-reloader && ./node_modules/.bin/jspm-hmr -I && npm start
 ```
-Now make some changes in "src/app.js" file and save it to see SystemJS Hot-Reload in action!
+> Confirm all Wizard Questions with Enter for default Babel Setup!
+
+Now go and make some changes in `app.js` or `es6module.js` file and save it to see __Vanilla JavaScript Hot-Reload__ in action!
 
 _Always use ES6 Modules Standard (import/export) instead of CommonJS/AMD format for solid static analysis capabilities and compliance with JS standard:_ http://exploringjs.com/es6/ch_modules.html
 
@@ -28,11 +26,9 @@ _Always use ES6 Modules Standard (import/export) instead of CommonJS/AMD format 
 
 ### Prerequisites
 
-```
-$ npm i jspm@beta  -D
-$ ./node_modules/.bin/jspm init
-$ ./node_modules/.bin/jspm i systemjs-hot-reloader
-```
+`npm i jspm@beta -D` - installs http://jspm.io
+`./node_modules/.bin/jspm init` - initialize jspm wizard
+`./node_modules/.bin/jspm i systemjs-hot-reloader` - installs client "Hot-Reload" dependency
 
 ### Install
 
@@ -40,9 +36,9 @@ $ ./node_modules/.bin/jspm i systemjs-hot-reloader
 $ npm i jspm-hmr -D
 ```
 
-> Tip: You can install it globally using -g flag so you can use it as simple http server in any directory on your machine
+> __Tip:__ You can install it globally using -g flag so you can use it as simple http server in any directory on your machine
 
-> Pro-Tip: You can use --init flag to initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS
+> __Pro-Tip:__ You can use --init flag to initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS
 
 ---
 
