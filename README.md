@@ -1,8 +1,26 @@
 ## HOT-RELOAD & DEV-SERVER for Vanilla JavaScript (ES6 Modules)
-#### __Framework Agnostic Hot-Reload working with pure ES6 Modules - powered by SystemJS & JSPM__
+> ### _Framework Agnostic Hot-Reload - powered by SystemJS & JSPM_
 > You don't need fancy frameworks (like ReactJS) to do Hot-Reload! Check yourself!
 
 _Node.js package (written in TypeScript):_ https://www.npmjs.com/package/jspm-hmr
+
+---
+
+### _CRAZY-ONE-LINER_ for Quick Start :)
+- Rapid bootstrapping a new Vanilla JavaScript Application
+- Choose transpilation using Babel or TypeScript
+
+_Confirm all Wizard Questions with Enter - for default Babel setup_
+
+```
+npm i jspm@beta jspm-hmr -D && ./node_modules/.bin/jspm init && ./node_modules/.bin/jspm i systemjs-hot-reloader && ./node_modules/.bin/jspm-hmr -I && npm start
+```
+
+Now go and make some changes in `app.js` or `es6module.js` file and save it to see __Vanilla JavaScript Hot-Reload__ in action!
+
+_Always use ES6 Modules Standard (import/export) instead of CommonJS/AMD format for solid static analysis capabilities and compliance with JS standard:_ http://exploringjs.com/es6/ch_modules.html
+
+---
 
 ### Features
 - Quickly Bootstrap new Babel or TypeScript App using Cool CLI Wizard - include Dev Server with Hot-Reload using SystemJS & JSPM
@@ -10,17 +28,6 @@ _Node.js package (written in TypeScript):_ https://www.npmjs.com/package/jspm-hm
 - ReactJS Example workflow(https://github.com/piotrwitek/react-redux-typescript-starter-kit)
 - Live-reload resources like styles (CSS, SCSS), static assets or HTML files through System.js plugins
 - Leveraging [SystemJS](https://github.com/systemjs/systemjs) for Universal Module Loading Support
-
-### Quick Start _CRAZY-ONE-LINER_ :)
-__Start from scratch new Babel or TypeScript App using just few simple npm commands!__
-```
-npm i jspm@beta jspm-hmr -D && ./node_modules/.bin/jspm init && ./node_modules/.bin/jspm i systemjs-hot-reloader && ./node_modules/.bin/jspm-hmr -I && npm start
-```
-> Confirm all Wizard Questions with Enter for default Babel Setup!
-
-Now go and make some changes in `app.js` or `es6module.js` file and save it to see __Vanilla JavaScript Hot-Reload__ in action!
-
-_Always use ES6 Modules Standard (import/export) instead of CommonJS/AMD format for solid static analysis capabilities and compliance with JS standard:_ http://exploringjs.com/es6/ch_modules.html
 
 ---
 
