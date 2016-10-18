@@ -1,31 +1,43 @@
-# JSPM (SystemJS) Hot-Module-Reload
-> Hot-Module-Reload - made for dummies!
+## HOT-RELOAD & DEV-SERVER for Vanilla JavaScript (ES6 Modules)
+#### __Framework Agnostic Hot-Reload working with pure ES6 Modules - powered by SystemJS & JSPM__
+> You don't need fancy frameworks (like ReactJS) to do Hot-Reload! Check yourself!
 
-_Sources for Node.js package (written in TypeScript):_ https://www.npmjs.com/package/jspm-hmr
+_Node.js package (written in TypeScript):_ https://www.npmjs.com/package/jspm-hmr
 
 ### Features
-- Works great out-of-the-box - no setup!
-- Init procedure - inject fresh project with (index.html, src/app.js, server.js) and live-reload dev server
-- Hot-reload ReactJS Components during development
-- Live-reload other resources like styles (CSS, SCSS), assets or HTML files through System.js plugins
-- Leveraging [SystemJS](https://github.com/systemjs/systemjs) for Universal (ES6) Module Loading Support
-
+- Quickly Bootstrap new Babel or TypeScript App using Cool CLI Wizard - include Dev Server with Hot-Reload using SystemJS & JSPM
+- Fast & Scalable Hot-Reload Capabilities (perfect for ReactJS, Angular2, Vue & more...)
+- ReactJS Example workflow(https://github.com/piotrwitek/react-redux-typescript-starter-kit)
+- Live-reload resources like styles (CSS, SCSS), static assets or HTML files through System.js plugins
+- Leveraging [SystemJS](https://github.com/systemjs/systemjs) for Universal Module Loading Support
 
 ### Quick Start for Dummies :)
+__Start from scratch new Babel or TypeScript App using just few simple npm commands!__
 ```
-$ npm install jspm-hmr --save-dev
-$ ./node_modules/.bin/jspm-hmr --init
+$ npm i jspm@beta jspm-hmr -D
+$ ./node_modules/.bin/jspm init
+$ ./node_modules/.bin/jspm i systemjs-hot-reloader
+$ ./node_modules/.bin/jspm-hmr -I
 $ npm start
 ```
-Now make some changes in "src/app.js" file and save to see hot-module-reload in action!  
-Always try to use ES6 Modules (import/export) for future-proof code: http://exploringjs.com/es6/ch_modules.html  
+Now make some changes in "src/app.js" file and save it to see SystemJS Hot-Reload in action!
+
+_Always use ES6 Modules Standard (import/export) instead of CommonJS/AMD format for solid static analysis capabilities and compliance with JS standard:_ http://exploringjs.com/es6/ch_modules.html
 
 ---
+
+### Prerequisites
+
+```
+$ npm i jspm@beta  -D
+$ ./node_modules/.bin/jspm init
+$ ./node_modules/.bin/jspm i systemjs-hot-reloader
+```
 
 ### Install
 
 ```
-$ npm install jspm-hmr [--save-dev]
+$ npm i jspm-hmr -D
 ```
 
 > Tip: You can install it globally using -g flag so you can use it as simple http server in any directory on your machine
@@ -42,7 +54,7 @@ $ jspm-hmr [path] [options]
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -I, --init              initialize files configured with hot-module-reload (index.html, app.js, server.js)
+    -I, --init              CLI Wizard to bootstrap your project
     -O, --open              automatically open browser (defaults to false)
     -P, --port <number>     port number (defaults to 8888)
     -C, --caching [number]  enable caching with max-age= (defaults to -1)
@@ -50,17 +62,13 @@ $ jspm-hmr [path] [options]
 ---
 
 ### Examples:
-- Initialize your project with hot-module-reload configuration in cwd
-```
-$ jspm-hmr -I
-```
 
-- Start dev server in CWD & open in last active browser window
+- Start dev server in PWD & open in last active browser window
 ```
 $ jspm-hmr . -O
 ```
 
-- Start dev server in "dist" sub-folder on port 4444 and caching set to 3600 sec
+- Start dev server in relative directory "dist" on port 4444 and caching set to 3600 sec
 ```
 $ jspm-hmr "dist" -P 4444 -C 3600
 ```
@@ -69,15 +77,18 @@ $ jspm-hmr "dist" -P 4444 -C 3600
 
 ### How it works
 Watches specified files for changes in chosen path and emits events through web sockets on changes to your client to reload that particular JavaScript modules that has changed.
--I or --init flag initialize index.html and server.js in your project with automatic hot-module-reload configuration for easy setup.
+`-I` or `--init` flag will run CLI Wizard to bootstrap your `index.html`, `app.js` and `server.js` in your project folder with Dev Server and Hot-Reload configuration for quick start.
 
-Under the hood it uses great [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) with [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter).
+It uses great [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) for Client and [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter) for Dev Server.
 
 ---
 
 ### Dependencies:
 - [http-server](https://github.com/indexzero/http-server)
 - [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter)
+
+### Peer Dependencies:
+- [jspm](https://github.com/jspm/jspm-cli)
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
 
 ---

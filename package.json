@@ -2,7 +2,7 @@
   "name": "jspm-hmr",
   "version": "0.4.3",
   "preferGlobal": true,
-  "description": "JSPM (SystemJS) Hot-Module-Reload - made for dummies!",
+  "description": "HOT-RELOAD & DEV-SERVER for Vanilla JavaScript (ES6 Modules) - powered by SystemJS & JSPM",
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
   "license": "Apache-2.0",
   "homepage": "https://github.com/piotrwitek/jspm-hmr",
@@ -38,8 +38,7 @@
     "commander": "^2.9.0",
     "http-server": "^0.9.0",
     "mkdirp": "^0.5.1",
-    "opener": "^1.4.1",
-    "systemjs-hot-reloader": "^0.6.0"
+    "opener": "^1.4.1"
   },
   "devDependencies": {
     "@types/mkdirp": "^0.3.29",
@@ -49,6 +48,9 @@
     "ts-node": "^1.6.0",
     "tslint": "^3.13.0",
     "typescript": "^2.0.3"
+  },
+  "peerDependencies": {
+    "jspm": "^0.17.0-beta.29"
   },
   "keywords": [
     "systemjs",
