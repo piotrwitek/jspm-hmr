@@ -15,14 +15,19 @@
  */
 'use strict';
 // TODO: switch to core http module
-// TODO: extract as seperate node package
 const httpServer = require('http-server');
 const chokidar = require('chokidar-socket-emitter');
 const openerCommand = require('opener');
 const packageVersion = require('../package.json').version;
 const nodeEnv = process.env.NODE_ENV;
 
-export function start(options) {
+export function start(options: {
+  path: string,
+  port: number,
+  cache: number,
+  open: boolean,
+  command?: string,
+}) {
   // init
   const hotReload = true;
   const path = options.path || '.';
@@ -30,7 +35,7 @@ export function start(options) {
   const host = 'localhost';
   const port = options.port || 8888;
   const url = protocol + '://' + host + ':' + port;
-  const cache = options.caching || -1;
+  const cache = options.cache || -1;
   const open = options.open || false;
   const command = options.command || null;
   const server = createServer(path, cache, options.proxy);
@@ -55,7 +60,7 @@ export function start(options) {
   return server;
 }
 
-function createServer(path, cache, proxy) {
+function createServer(path: string, cache: number) {
   return httpServer.createServer({
     root: path,
     cache: cache,
@@ -68,14 +73,14 @@ function createServer(path, cache, proxy) {
   });
 }
 
-function injectChokidarSocketEmitter(server) {
+function injectChokidarSocketEmitter(server: any) {
   chokidar({
     app: server.server
   });
 }
 
 // log helpers
-function logOptionsInfo(version, nodeEnv, cache) {
+function logOptionsInfo(version: string, nodeEnv: string, cache: number) {
   const environmentText = (nodeEnv === 'production' ? 'production ' : 'development');
   const cacheText = (cache ? 'enabled ' : 'disabled');
 
@@ -89,7 +94,7 @@ function logOptionsInfo(version, nodeEnv, cache) {
   );
 }
 
-function logStartedInfo(path, url) {
+function logStartedInfo(path: string, url: string) {
   console.log(`serving "${path}", listening at ${url}`);
   console.log('\n>>> hit CTRL-C to stop <<<\n');
 }

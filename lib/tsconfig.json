@@ -6,11 +6,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "isolatedModules": false,
-    "jsx": "react",
     "moduleResolution": "node",
     "noEmit": false,
     "noEmitOnError": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noResolve": false,
     "outDir": "../dist",
     "preserveConstEnums": true,
@@ -18,7 +17,8 @@
     "sourceMap": true,
     "allowUnusedLabels": false,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true
   },
   "filesGlob": [
     "**/*.ts",
@@ -50,3 +50,4 @@
   },
   "compileOnSave": false
 }
+
