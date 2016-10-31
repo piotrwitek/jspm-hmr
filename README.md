@@ -57,30 +57,31 @@ $ jspm-hmr [path] [options]
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -I, --init              CLI Wizard to bootstrap your project
-    -O, --open              automatically open browser (defaults to false)
-    -P, --port <number>     port number (defaults to 8888)
-    -C, --caching [number]  enable caching with max-age= (defaults to -1)
+    -i, --init             CLI Wizard to bootstrap your project
+    -o, --open             automatically open browser (default: false)
+    -p, --port <number>    port number (default: 8888)
+    -c, --cache <seconds>  enable Cache-Control with max-age=<seconds> (default: -1)
+    -P, --proxy <url>      proxies requests to specified url
 
 ---
 
 ### Examples:
 
-- Start dev server in PWD & open in last active browser window
+- Start dev server in PWD  on port "4444" & automatically open in browser (last active window takes precedence)
 ```
-$ jspm-hmr . -O
+$ jspm-hmr . -p 4444 -o
 ```
 
-- Start dev server in relative directory "dist" on port 4444 and caching set to 3600 sec
+- Start dev server in directory "dist"  with caching set to "3600 sec" and proxy target set to "http://localhost:1234"
 ```
-$ jspm-hmr "dist" -P 4444 -C 3600
+$ jspm-hmr dist  -c 3600 -P http://localhost:1234
 ```
 
 ---
 
 ### How it works
 Watches specified files for changes in chosen path and emits events through web sockets on changes to your client to reload that particular JavaScript modules that has changed.
-`-I` or `--init` flag will run CLI Wizard to bootstrap your `index.html`, `app.js` and `server.js` in your project folder with Dev Server and Hot-Reload configuration for quick start.
+`-i` or `--init` flag will run CLI Wizard to bootstrap your `index.html`, `app.js` and `server.js` in your project folder with Dev Server and Hot-Reload configuration for quick start.
 
 It uses great [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) for Client and [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter) for Dev Server.
 
