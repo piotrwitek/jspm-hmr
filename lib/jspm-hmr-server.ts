@@ -27,18 +27,23 @@ export function start(options: {
   cache: number,
   open: boolean,
   command?: string,
+  proxy?: string,
 }) {
+
   // init
   const hotReload = true;
-  const path = options.path || '.';
   const protocol = 'http';
   const host = 'localhost';
   const port = options.port || 8888;
   const url = protocol + '://' + host + ':' + port;
-  const cache = options.cache || -1;
+
   const open = options.open || false;
   const command = options.command || null;
-  const server = createServer(path, cache, options.proxy);
+
+  const path = options.path || '.';
+  const cache = options.cache || -1;
+  const proxy = options.proxy || undefined;
+  const server = createServer(path, cache, proxy);
 
   logOptionsInfo(packageVersion, nodeEnv, cache);
 
@@ -60,7 +65,7 @@ export function start(options: {
   return server;
 }
 
-function createServer(path: string, cache: number) {
+function createServer(path: string, cache: number, proxy: string) {
   return httpServer.createServer({
     root: path,
     cache: cache,
@@ -80,6 +85,7 @@ function injectChokidarSocketEmitter(server: any) {
 }
 
 // log helpers
+// TODO: add proxy info
 function logOptionsInfo(version: string, nodeEnv: string, cache: number) {
   const environmentText = (nodeEnv === 'production' ? 'production ' : 'development');
   const cacheText = (cache ? 'enabled ' : 'disabled');
