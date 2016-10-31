@@ -15,6 +15,7 @@
  */
 'use strict';
 // TODO: switch to core http module
+const path = require('path');
 const httpServer = require('http-server');
 const chokidar = require('chokidar-socket-emitter');
 const openerCommand = require('opener');
@@ -26,7 +27,7 @@ export function start(options: {
   port: number,
   cache: number,
   open: boolean,
-  command?: string,
+  openCommand?: string,
   proxy?: string,
 }) {
 
@@ -38,12 +39,12 @@ export function start(options: {
   const url = protocol + '://' + host + ':' + port;
 
   const open = options.open || false;
-  const command = options.command || null;
+  const command = options.openCommand || null;
 
-  const path = options.path || '.';
+  const wwwRoot = options.path || '.';
   const cache = options.cache || -1;
   const proxy = options.proxy || undefined;
-  const server = createServer(path, cache, proxy);
+  const server = createServer(wwwRoot, cache, proxy);
 
   logOptionsInfo(packageVersion, nodeEnv, cache);
 
@@ -53,7 +54,7 @@ export function start(options: {
   }
   server.listen(port);
 
-  logStartedInfo(path, url);
+  logStartedInfo(wwwRoot, url);
 
   // open browser
   if (open) {
@@ -100,7 +101,8 @@ function logOptionsInfo(version: string, nodeEnv: string, cache: number) {
   );
 }
 
-function logStartedInfo(path: string, url: string) {
-  console.log(`serving "${path}", listening at ${url}`);
-  console.log('\n>>> hit CTRL-C to stop <<<\n');
+function logStartedInfo(wwwRoot: string, url: string) {
+  console.log(`wwwroot at ${path.resolve(wwwRoot)}`);
+  console.log(`server running at ${url}`);
+  console.log('\n>>> hit CTRL-C twice to exit <<<\n');
 }

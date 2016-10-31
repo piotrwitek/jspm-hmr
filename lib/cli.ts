@@ -35,10 +35,11 @@ commander
   .version(packageVersion)
   .description(packageDescription + '\n  Version: ' + packageVersion)
   .usage('[path] [options]')
-  .option('-I, --init', 'initialize files configured with hot-module-reload (index.html, app.js, server.js)')
-  .option('-O, --open', 'automatically open browser (defaults to false)')
-  .option('-P, --port <number>', 'port number (defaults to 8888)', parseInt)
-  .option('-C, --cache [number]', 'enable Cache-Control with max-age=number (defaults to -1)', parseInt)
+  .option('-i, --init', 'CLI Wizard to bootstrap your project')
+  .option('-o, --open', 'automatically open browser (default: false)')
+  .option('-p, --port <number>', 'port number (default: 8888)', parseInt)
+  .option('-c, --cache <seconds>', 'enable Cache-Control with max-age=<seconds> (default: -1)', parseInt)
+  .option('-P, --proxy <url>', 'proxies requests to specified url')
   .parse(process.argv);
 
 // main procedure
@@ -55,7 +56,8 @@ async function main() {
       path: commander.args[0],
       cache: commander.cache,
       port: commander.port,
-      open: commander.open
+      open: commander.open,
+      proxy: commander.proxy
     };
     jspmHmrServer.start(options);
   }
