@@ -19,11 +19,11 @@
 'use strict';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as mkdirp from 'mkdirp';
+import { mkdir } from 'shelljs';
 import * as readline from 'readline';
 import * as jspmHmrServer from './jspm-hmr-server';
 
-const program = require('commander');
+const commander = require('commander');
 const packageVersion = require('../package.json').version;
 const packageDescription = require('../package.json').description;
 const rl = readline.createInterface({
@@ -31,7 +31,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-program
+commander
   .version(packageVersion)
   .description(packageDescription + '\n  Version: ' + packageVersion)
   .usage('[path] [options]')
@@ -41,23 +41,22 @@ program
   .option('-C, --cache [number]', 'enable Cache-Control with max-age=number (defaults to -1)', parseInt)
   .parse(process.argv);
 
-const options = {
-  path: program.args[0],
-  cache: program.cache,
-  port: program.port,
-  open: program.open
-};
-
 // main procedure
 main();
 
 async function main() {
-  if (program.init) {
+  if (commander.init) {
     // launch init
     await initProcedure();
     rl.close();
   } else {
     // launch server
+    const options = {
+      path: commander.args[0],
+      cache: commander.cache,
+      port: commander.port,
+      open: commander.open
+    };
     jspmHmrServer.start(options);
   }
 }
@@ -67,7 +66,6 @@ async function initProcedure() {
   const sourceRoot = path.join(__dirname, '../boilerplate');
   const clientFiles = ['index.html', 'assets/loader-style.css', 'src/app.js', 'src/es6module.js'];
   const serverFiles = ['server.js'];
-  let confirmedTargets = [];
 
   // confirm targetRoot folder
   console.log('  Initialization directory -> ' + targetRoot);
@@ -88,13 +86,15 @@ async function initProcedure() {
         await copyFilePromise(sourcePath, targetPath);
       };
     }
+    console.log('\n Boilerplate initialization completed.');
   } catch (err) {
+    console.log('\n Boilerplate initialization failed with error:');
     console.log(err);
   }
 
 }
 
-async function checkFileExistsConfirmOverwrite(file) {
+async function checkFileExistsConfirmOverwrite(file: string) {
   const exist = await checkFileExistsPromise(file);
 
   if (exist) {
@@ -121,7 +121,7 @@ function checkFileExistsPromise(file: any): Promise<any> {
   });
 }
 
-function askConfirmationPromise(msg) {
+function askConfirmationPromise(msg: string) {
   return new Promise((resolve, reject) => {
     rl.question(msg + ' (Y)/n: ', (answer) => {
       const parsed = answer.toString().toLowerCase();
@@ -139,26 +139,15 @@ function copyFilePromise(source: string, target: string) {
     fs.readFile(source, (err, data) => {
       if (err) reject(err);
 
-      mkdirp(path.dirname(target), function (err) {
+      mkdir('-p', path.dirname(target));
+      fs.writeFile(target, data, (err) => {
         if (err) reject(err);
 
-        fs.writeFile(target, data, (err) => {
-          if (err) reject(err);
-
-          console.log('  - %s -> %s', source, target);
-          resolve(true);
-        });
+        console.log('  - %s -> %s', source, target);
+        resolve(true);
       });
     });
   });
-}
-
-function processFileFinally(err) {
-  if (err) {
-    console.log('\n Boilerplate initialization failed.');
-  } else {
-    console.log('\n Boilerplate initialization completed.');
-  }
 }
 
 // exit hooks
