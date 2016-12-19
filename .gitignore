@@ -40,3 +40,6 @@ typings
 # Custom
 dist
 .DS_Store
+
+# ssl cert
+*.pem

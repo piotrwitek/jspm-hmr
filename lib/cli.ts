@@ -40,6 +40,9 @@ commander
   .option('-p, --port <number>', 'port number (default: 8888)', parseInt)
   .option('-c, --cache <seconds>', 'enable Cache-Control with max-age=<seconds> (default: -1)', parseInt)
   .option('-P, --proxy <url>', 'proxies requests to specified url')
+  .option('-s, --ssl', 'enable https on server, requires \'--key\' and \'--cert\'')
+  .option('-k, --key <path>', 'path to ssl key')
+  .option('-c, --cert <path>', 'path to ssl cert')
   .parse(process.argv);
 
 // main procedure
@@ -57,7 +60,10 @@ async function main() {
       cache: commander.cache,
       port: commander.port,
       open: commander.open,
-      proxy: commander.proxy
+      proxy: commander.proxy,
+      ssl: commander.ssl,
+      key: commander.key,
+      cert: commander.cert
     };
     jspmHmrServer.start(options);
   }
