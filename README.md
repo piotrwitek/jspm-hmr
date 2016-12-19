@@ -61,8 +61,10 @@ $ jspm-hmr [path] [options]
     -o, --open             automatically open browser (default: false)
     -p, --port <number>    port number (default: 8888)
     -c, --cache <seconds>  enable Cache-Control with max-age=<seconds> (default: -1)
-    -P, --proxy <url>      proxies requests to specified url
-
+    -P, --proxy <url>      proxies requests to specified url    
+    -S, --ssl              enables https, requires --key and --cert
+    -K, --key <path>       path to ssl-key .pem file
+    -C, --cert <path>      path to ssl-cert .pem file
 ---
 
 ### Examples:

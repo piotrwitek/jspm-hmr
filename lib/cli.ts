@@ -40,9 +40,9 @@ commander
   .option('-p, --port <number>', 'port number (default: 8888)', parseInt)
   .option('-c, --cache <seconds>', 'enable Cache-Control with max-age=<seconds> (default: -1)', parseInt)
   .option('-P, --proxy <url>', 'proxies requests to specified url')
-  .option('-s, --ssl', 'enable https on server, requires \'--key\' and \'--cert\'')
-  .option('-k, --key <path>', 'path to ssl key')
-  .option('-c, --cert <path>', 'path to ssl cert')
+  .option('-S, --ssl', 'enable https on server, requires \'--key\' and \'--cert\'')
+  .option('-K, --key <path>', 'path to ssl key')
+  .option('-C, --cert <path>', 'path to ssl cert')
   .parse(process.argv);
 
 // main procedure
