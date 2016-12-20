@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "precommit": "npm run lint",
-    "prepush": "npm run lint && npm test",
+    "prepush": "npm run lint & npm test",
     "prepublishOnly": "yarn run clean && yarn && yarn run test && yarn run build && yarn run build:jsnext",
     "clean": "shx rm -rf node_modules/",
     "build": "shx rm -rf dist && tsc -p .",

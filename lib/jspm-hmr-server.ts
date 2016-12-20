@@ -67,28 +67,28 @@ export function start(options: {
   // open browser
   if (open) {
     openerCommand(url, {
-      command: command
+      command: command,
     });
   }
 
   return server;
 }
 
-function createServer(path: string, cache: number, proxy: string, ssl?: boolean, key?: string, cert?: string) {
+function createServer(wwwRoot: string, cache: number, proxy?: string, ssl?: boolean, key?: string, cert?: string) {
   let options: any = {
-    root: path,
+    root: wwwRoot,
     cache: cache,
     robots: true,
     proxy: proxy,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true'
-    }
+      'Access-Control-Allow-Credentials': 'true',
+    },
   };
   if (ssl && key && cert) {
     options.https = {
       key: key,
-      cert: cert
+      cert: cert,
     };
   }
   return httpServer.createServer(options);
@@ -96,7 +96,7 @@ function createServer(path: string, cache: number, proxy: string, ssl?: boolean,
 
 function injectChokidarSocketEmitter(server: any) {
   chokidar({
-    app: server.server
+    app: server.server,
   });
 }
 
@@ -112,7 +112,7 @@ function logOptionsInfo(version: string, nodeEnv: string, cache: number) {
     '  #----------------+----------------#' + '\n' +
     '  # environment    | ' + environmentText + '    #' + '\n' +
     '  # cache          | ' + cacheText + '       #' + '\n' +
-    '  ###################################' + '\n'
+    '  ###################################' + '\n',
   );
 }
 
