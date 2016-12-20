@@ -24,13 +24,16 @@
     "LICENSE"
   ],
   "scripts": {
-    "start": "ts-node -P lib lib/cli.ts",
-    "build": "shx rm -rf dist && tsc -p lib",
-    "lint": "tslint lib/**/*.ts",
-    "test": "echo \"Yet no tests was needed.\"",
     "precommit": "npm run lint",
     "prepush": "npm run lint && npm test",
-    "prepublish": "npm run test && npm run build"
+    "prepublishOnly": "yarn run clean && yarn && yarn run test && yarn run build && yarn run build:jsnext",
+    "clean": "shx rm -rf node_modules/",
+    "build": "shx rm -rf dist && tsc -p .",
+    "build:jsnext": "shx rm -rf jsnext && tsc -p . -t 'ES2015' --outDir jsnext",
+    "dev": "ts-node -P lib lib/cli.ts",
+    "lint": "tslint 'lib/**/*.ts'",
+    "tsc": "tsc -p . --noEmit",
+    "test": "npm run lint && npm run tsc"
   },
   "dependencies": {
     "chokidar-socket-emitter": "^0.5.2",
@@ -67,4 +70,3 @@
     "dummies"
   ]
 }
-
