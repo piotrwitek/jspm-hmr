@@ -1,6 +1,6 @@
 {
   "name": "jspm-hmr",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "preferGlobal": true,
   "description": "HOT-RELOAD & DEV-SERVER for Vanilla JavaScript (ES6 Modules) - powered by SystemJS & JSPM",
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
