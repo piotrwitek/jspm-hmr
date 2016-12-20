@@ -1582,6 +1582,10 @@ tsconfig@^5.0.2:
     strip-bom "^2.0.0"
     strip-json-comments "^2.0.0"
 
+tslib@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.2.0.tgz#074fb171034594bdba4c4dbb197c26e4a0b88383"
+
 tslint@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/tslint/-/tslint-4.1.1.tgz#ae15c9478d92eb2f01d5102c69c493ec02d7e7e4"
@@ -1604,9 +1608,9 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
 
-typescript@^2.0.3:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.1.4.tgz#b53b69fb841126acb1dd4b397d21daba87572251"
+typescript@2.2.0-dev.20161220:
+  version "2.2.0-dev.20161220"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.0-dev.20161220.tgz#c43cce2d7fdbaeb99bddaf148a9c8efda269da3a"
 
 uid-number@~0.0.6:
   version "0.0.6"
