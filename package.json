@@ -11,24 +11,15 @@
     "type": "git",
     "url": "git+https://github.com/piotrwitek/jspm-hmr.git"
   },
+  "types": "dist/jspm-hmr-server.d.ts",
   "main": "dist/jspm-hmr-server.js",
   "jsnext:main": "jsnext/jspm-hmr-server.js",
-  "typings": "dist/jspm-hmr-server.d.ts",
   "bin": {
     "jspm-hmr": "./dist/cli.js"
   },
   "engines": {
     "node": ">=0.10.x"
   },
-  "files": [
-    "boilerplate/",
-    "jsnext/",
-    "dist/",
-    "ssl/",
-    "README.md",
-    "LICENSE",
-    "yarn.lock"
-  ],
   "scripts": {
     "precommit": "npm run lint",
     "prepush": "npm run lint & npm test",
@@ -61,6 +52,15 @@
   "peerDependencies": {
     "jspm": "^0.17.0-beta.31"
   },
+  "files": [
+    "boilerplate/",
+    "jsnext/",
+    "dist/",
+    "ssl/",
+    "README.md",
+    "LICENSE",
+    "yarn.lock"
+  ],
   "keywords": [
     "systemjs",
     "jspm",
