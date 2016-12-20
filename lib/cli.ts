@@ -39,9 +39,9 @@ commander
   .option('-p, --port <number>', 'port number (default: 8888)', parseInt)
   .option('-c, --cache <seconds>', 'enable Cache-Control with max-age=<seconds> (default: -1)', parseInt)
   .option('-P, --proxy <url>', 'proxies requests to specified url')
-  .option('-S, --ssl', 'enable https on server, requires \'--key\' and \'--cert\'')
-  .option('-K, --key <path>', 'path to ssl key')
-  .option('-C, --cert <path>', 'path to ssl cert')
+  .option('-S, --ssl', 'enables https (by default uses built-in self-signed cert)')
+  .option('-K, --key <path>', 'path to ssl-key .pem file (overrides default key)')
+  .option('-C, --cert <path>', 'path to ssl-cert .pem file (overrides default cert)')
   .parse(process.argv);
 
 // main procedure

@@ -55,16 +55,16 @@ $ jspm-hmr [path] [options]
 ```
  Options:
 
-    -h, --help              output usage information
-    -V, --version           output the version number
+    -h, --help             output usage information
+    -V, --version          output the version number
     -i, --init             CLI Wizard to bootstrap your project
     -o, --open             automatically open browser (default: false)
     -p, --port <number>    port number (default: 8888)
     -c, --cache <seconds>  enable Cache-Control with max-age=<seconds> (default: -1)
     -P, --proxy <url>      proxies requests to specified url    
-    -S, --ssl              enables https, requires --key and --cert
-    -K, --key <path>       path to ssl-key .pem file
-    -C, --cert <path>      path to ssl-cert .pem file
+    -S, --ssl              enables https (by default uses built-in self-signed cert)
+    -K, --key <path>       path to ssl-key .pem file (overrides default key)
+    -C, --cert <path>      path to ssl-cert .pem file (overrides default cert)
 ---
 
 ### Examples:
