@@ -12,6 +12,7 @@
     "url": "git+https://github.com/piotrwitek/jspm-hmr.git"
   },
   "main": "dist/jspm-hmr-server.js",
+  "jsnext:main": "jsnext/jspm-hmr-server.js",
   "typings": "dist/jspm-hmr-server.d.ts",
   "bin": "dist/cli.js",
   "engines": {
