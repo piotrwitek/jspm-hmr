@@ -13,14 +13,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-'use strict';
+
 // TODO: switch to core http module
 const path = require('path');
 const httpServer = require('http-server');
 const chokidar = require('chokidar-socket-emitter');
 const openerCommand = require('opener');
 const packageVersion = require('../package.json').version;
-const nodeEnv = process.env.NODE_ENV;
+const Config = require('./config');
+
 
 export function start(options: {
   path: string,
@@ -35,13 +36,14 @@ export function start(options: {
 }) {
 
   // init
+  const NODE_ENV = Config.NODE_ENV;
   const hotReload = true;
-  const key = options.key || 'key.pem';
-  const cert = options.cert || 'cert.pem';
+  const key = options.key || Config.KEY_PATH;
+  const cert = options.cert || Config.CERT_PATH;
   const ssl = options.ssl || false;
   const protocol = ssl ? 'https' : 'http';
   const host = 'localhost';
-  const port = options.port || 8888;
+  const port = options.port || Config.WEB_PORT;
   const url = protocol + '://' + host + ':' + port;
 
   const open = options.open || false;
@@ -52,7 +54,7 @@ export function start(options: {
   const proxy = options.proxy || undefined;
   const server = createServer(wwwRoot, cache, proxy, ssl, key, cert);
 
-  logOptionsInfo(packageVersion, nodeEnv, cache);
+  logOptionsInfo(packageVersion, NODE_ENV, cache);
 
   // inject hmr & start server
   if (hotReload) {

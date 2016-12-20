@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-'use strict';
 import * as fs from 'fs';
 import * as path from 'path';
 import { mkdir } from 'shelljs';
