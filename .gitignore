@@ -29,7 +29,6 @@ build/Release
 # Dependency directories
 node_modules
 jspm_packages
-typings
 
 # Optional npm cache directory
 .npm
@@ -38,8 +37,9 @@ typings
 .node_repl_history
 
 # Custom
-dist
 .DS_Store
+dist
+jsnext
 
 # ssl cert
 *.pem

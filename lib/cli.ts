@@ -27,7 +27,7 @@ const packageVersion = require('../package.json').version;
 const packageDescription = require('../package.json').description;
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 commander
@@ -62,7 +62,7 @@ async function main() {
       proxy: commander.proxy,
       ssl: commander.ssl,
       key: commander.key,
-      cert: commander.cert
+      cert: commander.cert,
     };
     jspmHmrServer.start(options);
   }
@@ -91,7 +91,7 @@ async function initProcedure() {
       const targetPath = path.join(targetRoot, file);
       if (await checkFileExistsConfirmOverwrite(targetPath)) {
         await copyFilePromise(sourcePath, targetPath);
-      };
+      }
     }
     console.log('\n Boilerplate initialization completed.');
   } catch (err) {
@@ -147,8 +147,8 @@ function copyFilePromise(source: string, target: string) {
       if (err) reject(err);
 
       mkdir('-p', path.dirname(target));
-      fs.writeFile(target, data, (err) => {
-        if (err) reject(err);
+      fs.writeFile(target, data, (err2) => {
+        if (err2) reject(err2);
 
         console.log('  - %s -> %s', source, target);
         resolve(true);
