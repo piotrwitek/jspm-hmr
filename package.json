@@ -19,9 +19,12 @@
   },
   "files": [
     "boilerplate/",
+    "jsnext/",
     "dist/",
+    "ssl/",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "yarn.lock"
   ],
   "scripts": {
     "precommit": "npm run lint",
