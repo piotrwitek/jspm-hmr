@@ -24,6 +24,9 @@ const nodeEnv = process.env.NODE_ENV;
 
 export function start(options: {
   path: string,
+  key: string,
+  cert: string,
+  ssl: boolean,
   port: number,
   cache: number,
   open: boolean,
@@ -33,7 +36,10 @@ export function start(options: {
 
   // init
   const hotReload = true;
-  const protocol = 'http';
+  const key = options.key || 'key.pem';
+  const cert = options.cert || 'cert.pem';
+  const ssl = options.ssl || false;
+  const protocol = ssl ? 'https' : 'http';
   const host = 'localhost';
   const port = options.port || 8888;
   const url = protocol + '://' + host + ':' + port;
@@ -44,7 +50,7 @@ export function start(options: {
   const wwwRoot = options.path || '.';
   const cache = options.cache || -1;
   const proxy = options.proxy || undefined;
-  const server = createServer(wwwRoot, cache, proxy);
+  const server = createServer(wwwRoot, cache, proxy, ssl, key, cert);
 
   logOptionsInfo(packageVersion, nodeEnv, cache);
 
@@ -66,8 +72,8 @@ export function start(options: {
   return server;
 }
 
-function createServer(path: string, cache: number, proxy: string) {
-  return httpServer.createServer({
+function createServer(path: string, cache: number, proxy: string, ssl?: boolean, key?: string, cert?: string) {
+  let options: any = {
     root: path,
     cache: cache,
     robots: true,
@@ -76,7 +82,14 @@ function createServer(path: string, cache: number, proxy: string) {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true'
     }
-  });
+  };
+  if (ssl && key && cert) {
+    options.https = {
+      key: key,
+      cert: cert
+    };
+  }
+  return httpServer.createServer(options);
 }
 
 function injectChokidarSocketEmitter(server: any) {
