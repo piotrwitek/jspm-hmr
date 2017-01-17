@@ -36,10 +36,18 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# Custom
-.DS_Store
-dist
-jsnext
-
 # ssl cert
 *.pem
+
+# Custom
+.alm/
+.vscode/
+.idea/
+.tmp/
+.DS_Store
+.env
+*.pyc
+
+# Build
+es5/
+es6/
