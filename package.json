@@ -1,43 +1,43 @@
 {
   "name": "jspm-hmr",
   "version": "0.7.0",
-  "preferGlobal": true,
   "description": "HOT-RELOAD & DEV-SERVER for Vanilla JavaScript (ES6 Modules) - powered by SystemJS & JSPM",
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
   "license": "Apache-2.0",
+  "repository": "https://github.com/piotrwitek/jspm-hmr",
   "homepage": "https://github.com/piotrwitek/jspm-hmr",
-  "bugs": "https://github.com/piotrwitek/jspm-hmr/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/piotrwitek/jspm-hmr.git"
-  },
-  "types": "dist/jspm-hmr-server.d.ts",
-  "main": "dist/jspm-hmr-server.js",
-  "jsnext:main": "jsnext/jspm-hmr-server.js",
+  "types": "es5/jspm-hmr-server.d.ts",
+  "main": "es5/jspm-hmr-server.js",
+  "module": "es6/jspm-hmr-server.js",
+  "jsnext:main": "es6/jspm-hmr-server.js",
   "bin": {
-    "jspm-hmr": "./dist/cli.js"
+    "jspm-hmr": "./es5/cli.js",
+    "jspm-hmr-es6": "./es6/cli.js"
   },
   "engines": {
-    "node": ">=0.10.x"
+    "node": ">= 4"
   },
   "scripts": {
     "precommit": "npm run lint",
     "prepush": "npm run lint & npm test",
-    "prepublishOnly": "yarn run clean && yarn && yarn run test && yarn run build && yarn run build:jsnext",
-    "clean": "shx rm -rf node_modules/",
-    "build": "shx rm -rf dist && tsc -p .",
-    "build:jsnext": "shx rm -rf jsnext && tsc -p . -t 'ES2015' --outDir jsnext",
-    "dev": "ts-node -P lib lib/cli.ts",
-    "lint": "tslint 'lib/**/*.ts'",
-    "tsc": "tsc -p . --noEmit",
-    "test": "npm run lint && npm run tsc"
+    "prepublishOnly": "yarn run reinstall && yarn run check && yarn run test && yarn run build",
+    "reinstall": "shx rm -rf node_modules/ && yarn install",
+    "build:es5": "shx rm -rf es5 && tsc -p src --outDir es5",
+    "build:es6": "shx rm -rf es6 && tsc -p src --outDir es6 -t 'ES2015'",
+    "build": "yarn run build:es5 & yarn run build:es6",
+    "check": "yarn run lint && yarn run tsc",
+    "lint": "tslint --project src/tsconfig.json",
+    "tsc": "tsc -p src --noEmit",
+    "test": "npm run lint && npm run tsc",
+    "dev": "ts-node -P lib lib/cli.ts"
   },
   "dependencies": {
     "chokidar-socket-emitter": "^0.5.2",
     "commander": "^2.9.0",
     "http-server": "^0.9.0",
     "opener": "^1.4.1",
-    "shelljs": "^0.7.6"
+    "shelljs": "^0.7.6",
+    "tslib": "^1.5.0"
   },
   "devDependencies": {
     "@types/node": "^7.0.0",
@@ -45,35 +45,22 @@
     "husky": "^0.12.0",
     "shx": "^0.2.2",
     "ts-node": "^2.0.0",
-    "tslib": "^1.5.0",
     "tslint": "^4.3.1",
     "typescript": "^2.1.5"
   },
   "peerDependencies": {
-    "jspm": "^0.17.0-beta.31"
+    "jspm": "^0.17.0-beta.32"
   },
-  "files": [
-    "boilerplate/",
-    "jsnext/",
-    "dist/",
-    "ssl/",
-    "README.md",
-    "LICENSE",
-    "yarn.lock"
-  ],
   "keywords": [
     "systemjs",
     "jspm",
     "http",
     "server",
     "hot-reload",
+    "live-reload",
     "hmr",
-    "live",
     "hot",
     "module",
-    "reload",
-    "replacement",
-    "react",
-    "dummies"
+    "replacement"
   ]
 }
