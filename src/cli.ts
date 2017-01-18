@@ -16,145 +16,109 @@
  *   limitations under the License.
  */
 
-import * as fs from 'fs';
 import * as path from 'path';
-import { mkdir } from 'shelljs';
+import * as openerCommand from 'opener';
 import * as readline from 'readline';
-import * as jspmHmrServer from './jspm-hmr-server';
-
-const commander = require('commander');
-const packageVersion = require('../package.json').version;
-const packageDescription = require('../package.json').description;
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
+import * as jspmHmrServer from './jspm-hmr-server';
+import { initProject } from './init';
+
+import Config from './config';
+const packageVersion = require('../package.json').version;
+const packageDescription = require('../package.json').description;
+const VERSION = require('../package.json').version;
+const NODE_ENV = Config.NODE_ENV;
+
+const commander = require('commander');
 commander
   .version(packageVersion)
   .description(packageDescription + '\n  Version: ' + packageVersion)
   .usage('[path] [options]')
   .option('-i, --init', 'CLI Wizard to bootstrap your project')
-  .option('-o, --open', 'automatically open browser (default: false)')
-  .option('-p, --port <number>', 'port number (default: 8888)', parseInt)
+  .option('-o, --open', 'open default browser on start (default: false)')
+  .option('-p, --port <number>', 'port number (default: 3000)', parseInt)
+  .option('-a, --address <string>', 'custom address (default: localhost)')
   .option('-c, --cache <seconds>', 'enable Cache-Control with max-age=<seconds> (default: -1)', parseInt)
-  .option('-P, --proxy <url>', 'proxies requests to specified url')
+  .option('-P, --proxy <address>:<port>', 'proxies requests to specified target')
+  .option('--proxy-route <pattern>', 'proxies only requests that will match provided pattern')
   .option('-S, --ssl', 'enables https (by default uses built-in self-signed cert)')
   .option('-K, --key <path>', 'path to ssl-key .pem file (overrides default key)')
   .option('-C, --cert <path>', 'path to ssl-cert .pem file (overrides default cert)')
+  .option('--history', 'enable HTML5 History Api Fallback')
+  .option('--disable-hmr', 'disable Hot-Reload (Chokidar Socket Server)')
   .parse(process.argv);
 
 // main procedure
-main();
+mainAsync();
 
-async function main() {
+async function mainAsync() {
   if (commander.init) {
-    // launch init
-    await initProcedure();
-    rl.close();
+    // INIT PROCEDURE
+    await initProject();
   } else {
-    // launch server
+    // LAUNCH PROCEDURE
+    logHeaderMessage();
+
+    // create server options
+    const OPEN = commander.open || false;
+    const PORT = commander.port || Config.PORT;
+    const ADDRESS = commander.address || Config.ADDRESS;
     const options = {
-      path: commander.args[0],
+      path: commander.args[0] || '.',
       cache: commander.cache,
-      port: commander.port,
-      open: commander.open,
       proxy: commander.proxy,
+      proxyRoute: commander.proxyRoute,
       ssl: commander.ssl,
       key: commander.key,
       cert: commander.cert,
+      historyApiFallback: commander.history,
+      disableHmr: commander.disableHmr,
     };
-    jspmHmrServer.start(options);
-  }
-}
 
-async function initProcedure() {
-  const targetRoot = process.cwd();
-  const sourceRoot = path.join(__dirname, '../boilerplate');
-  const clientFiles = ['index.html', 'assets/loader-style.css', 'src/app.js', 'src/es6module.js'];
-  const serverFiles = ['server.js'];
+    const protocol = options.ssl ? 'https' : 'http';
+    const URL = protocol + '://' + ADDRESS + ':' + PORT;
 
-  // confirm targetRoot folder
-  console.log('  Initialization directory -> ' + targetRoot);
-  const confirmed = await askConfirmationPromise('  - Is path correct?');
+    // SERVER
+    const server = jspmHmrServer.createServer(options);
 
-  if (!confirmed) {
-    console.log('  Initialization aborted.');
-    return;
-  }
-
-  // check files if exists the ask for confirmation to overwrite
-  try {
-    const files = [...clientFiles, ...serverFiles];
-    for (let file of files) {
-      const sourcePath = path.join(sourceRoot, file);
-      const targetPath = path.join(targetRoot, file);
-      if (await checkFileExistsConfirmOverwrite(targetPath)) {
-        await copyFilePromise(sourcePath, targetPath);
-      }
-    }
-    console.log('\n Boilerplate initialization completed.');
-  } catch (err) {
-    console.log('\n Boilerplate initialization failed with error:');
-    console.log(err);
-  }
-
-}
-
-async function checkFileExistsConfirmOverwrite(file: string) {
-  const exist = await checkFileExistsPromise(file);
-
-  if (exist) {
-    console.log(`  File "${file}" already exists.`);
-    const confirmed = await askConfirmationPromise('  - Overwrite?');
-
-    if (!confirmed) {
-      console.log('  Skipped');
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function checkFileExistsPromise(file: any): Promise<any> {
-  return new Promise((resolve, reject) => {
-    fs.access(file, fs.constants.W_OK, (err) => {
-      if (err) {
-        resolve(false);
-      }
-      resolve(true);
-    });
-  });
-}
-
-function askConfirmationPromise(msg: string) {
-  return new Promise((resolve, reject) => {
-    rl.question(msg + ' (Y)/n: ', (answer) => {
-      const parsed = answer.toString().toLowerCase();
-      if (parsed === 'y' || parsed === '') {
-        resolve(true);
-      } else {
-        resolve(false);
-      }
-    });
-  });
-}
-
-function copyFilePromise(source: string, target: string) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(source, (err, data) => {
-      if (err) reject(err);
-
-      mkdir('-p', path.dirname(target));
-      fs.writeFile(target, data, (err2) => {
-        if (err2) reject(err2);
-
-        console.log('  - %s -> %s', source, target);
-        resolve(true);
+    server
+      .listen(PORT, (err: Error) => {
+        console.log(`serving ${path.resolve(options.path)}`);
+        console.log(`listening at ${URL}`);
+        console.log('[debug] %j', server.address());
+        console.log('\n>>> hit CTRL-C twice to exit <<<\n');
+      })
+      .on('error', function (err: any) {
+        if (err.code === 'EADDRINUSE') {
+          console.log(`\n[WARNING] Selected address is in use: ${URL}`);
+          console.log(`[WARNING] Please try again using different port or address...`);
+          console.log();
+          process.exit();
+        }
       });
-    });
-  });
+
+    // OPEN BROWSER
+    if (OPEN) {
+      openerCommand(URL, {
+        command: undefined,
+      });
+    }
+  }
+
+  rl.close();
+}
+
+function logHeaderMessage() {
+  console.log(`
+  ###################################
+  #  JSPM Hot-Module-Reload v${VERSION}  #
+  ###################################
+`);
+  console.log(`environment ${NODE_ENV || 'development'}`);
 }
 
 // exit hooks
