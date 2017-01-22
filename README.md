@@ -1,12 +1,12 @@
 ## HTTP Dev-Server with Hot-Reload for JavaScript (ES6 Modules)
 
-#### Consist of:
-#### - Express HTTP Server enhanced with WebSocket emitter on file changes 
-#### - WebSocket Client that will Hot-Reload changed ES6 Modules using SystemJS
+#### This library consist of:
+#### - Express HTTP Server enhanced with WebSocket emitter on file changes
+#### - SystemJS - ES6 Module Loader
+#### - WebSocket receiver for browser that trigger Hot-Reload for changed ES6 Modules
 
-> _Npm package:_ https://www.npmjs.com/package/jspm-hmr
-
-- ReactJS Boilerplate using this dev-server - (https://github.com/piotrwitek/react-redux-typescript-starter-kit)
+- Npm package: https://www.npmjs.com/package/jspm-hmr
+- ReactJS Boilerplate using this dev-server - https://github.com/piotrwitek/react-redux-typescript-starter-kit
 
 ---
 
@@ -36,11 +36,11 @@ Now you can open `app.js` or `es6module.js` file, make some changes and save it 
 
 ### Project setup
 
-- http://jspm.io - package manager and bundler for JS apps (webpack alternative)
+- http://jspm.io - package manager and bundler for JS apps (webpack alternative)  
 `npm i jspm@beta -D`
-- use jspm-cli to init project build workflow
+- use jspm-cli to init project build workflow  
 `./node_modules/.bin/jspm init`
-- install client web-socket receiver for hot-reload
+- install client web-socket receiver for hot-reload  
 `./node_modules/.bin/jspm i systemjs-hot-reloader`
 
 ### Install
