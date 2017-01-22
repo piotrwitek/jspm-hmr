@@ -1,17 +1,31 @@
-## HOT-RELOAD & DEV-SERVER for JavaScript Modules (ES6 Modules)
-> ### _Generic Hot-Reload for ES6 Modules powered by SystemJS & JSPM_
+## HTTP Dev-Server with Hot-Reload for JavaScript (ES6 Modules)
 
-_Npm package:_ https://www.npmjs.com/package/jspm-hmr
+#### Consist of:
+#### - Express HTTP Server enhanced with WebSocket emitter on file changes 
+#### - WebSocket Client that will Hot-Reload changed ES6 Modules using SystemJS
+
+> _Npm package:_ https://www.npmjs.com/package/jspm-hmr
+
+- ReactJS Boilerplate using this dev-server - (https://github.com/piotrwitek/react-redux-typescript-starter-kit)
 
 ---
 
-### _ONE-LINE-INSTALL_ for Quick Start :)
-This includes:
+### Features
+- Quickly Bootstrap new Babel or TypeScript App using nice CLI Wizard - include Dev Server with Hot-Reload using SystemJS & JSPM
+- Fast & Scalable Hot-Reload Capabilities (perfect for ReactJS, Angular2, Vue & more...)
+- Live-reload static resources like styles (CSS, SCSS), images, fonts or HTML templates through [SystemJS Plugins Ecosystem](https://github.com/systemjs/systemjs#plugins)
+- Leveraging [SystemJS](https://github.com/systemjs/systemjs) for Universal Module Loading Support
+
+---
+
+### Quick Start
+Includes:
 - Bootstrap Minimal App Boilerplate with fancy CLI Wizard
 - Transpilation workflow setup to choose: Babel or TypeScript
 
-> __Pro-Tip:__ Confirm all Wizard Questions with Enter for default __Babel__ setup
+> __Tip:__ Confirm all Wizard Questions with Enter for default __Babel__ setup
 
+##### _ONE-LINE-COMMAND_
 ```
 npm i jspm@beta jspm-hmr -D && ./node_modules/.bin/jspm init && ./node_modules/.bin/jspm i systemjs-hot-reloader && ./node_modules/.bin/jspm-hmr -I && npm start
 ```
@@ -20,22 +34,13 @@ Now you can open `app.js` or `es6module.js` file, make some changes and save it 
 
 ---
 
-### Features
-- Quickly Bootstrap new Babel or TypeScript App using nice CLI Wizard - include Dev Server with Hot-Reload using SystemJS & JSPM
-- Fast & Scalable Hot-Reload Capabilities (perfect for ReactJS, Angular2, Vue & more...)
-- ReactJS Example workflow(https://github.com/piotrwitek/react-redux-typescript-starter-kit)
-- Live-reload static resources like styles (CSS, SCSS), images, fonts or HTML templates through [SystemJS Plugins Ecosystem](https://github.com/systemjs/systemjs#plugins)
-- Leveraging [SystemJS](https://github.com/systemjs/systemjs) for Universal Module Loading Support
-
----
-
 ### Project setup
 
-- http://jspm.io - package manager for JS apps
+- http://jspm.io - package manager and bundler for JS apps (webpack alternative)
 `npm i jspm@beta -D`
-- init JSPM transpilation workflow
+- use jspm-cli to init project build workflow
 `./node_modules/.bin/jspm init`
-- install hot-reload client library
+- install client web-socket receiver for hot-reload
 `./node_modules/.bin/jspm i systemjs-hot-reloader`
 
 ### Install
