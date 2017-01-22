@@ -1,41 +1,42 @@
-## HOT-RELOAD & DEV-SERVER for Vanilla JavaScript (ES6 Modules)
-> ### _Framework Agnostic Hot-Reload - powered by SystemJS & JSPM_
-> You don't need fancy frameworks (like ReactJS) to do Hot-Reload! Check yourself!
+## HOT-RELOAD & DEV-SERVER for JavaScript Modules (ES6 Modules)
+> ### _Generic Hot-Reload for ES6 Modules powered by SystemJS & JSPM_
 
-_Node.js package (written in TypeScript):_ https://www.npmjs.com/package/jspm-hmr
+_Npm package:_ https://www.npmjs.com/package/jspm-hmr
 
 ---
 
-### _CRAZY-ONE-LINER_ for Quick Start :)
-- Rapid bootstrapping a new Vanilla JavaScript Application
-- Choose transpilation using Babel or TypeScript
+### _ONE-LINE-INSTALL_ for Quick Start :)
+This includes:
+- Bootstrap Minimal App Boilerplate with fancy CLI Wizard
+- Transpilation workflow setup to choose: Babel or TypeScript
 
-_Confirm all Wizard Questions with Enter - for default Babel setup_
+> __Pro-Tip:__ Confirm all Wizard Questions with Enter for default __Babel__ setup
 
 ```
 npm i jspm@beta jspm-hmr -D && ./node_modules/.bin/jspm init && ./node_modules/.bin/jspm i systemjs-hot-reloader && ./node_modules/.bin/jspm-hmr -I && npm start
 ```
 
-Now go and make some changes in `app.js` or `es6module.js` file and save it to see __Vanilla JavaScript Hot-Reload__ in action!
-
-_Always use ES6 Modules Standard (import/export) instead of CommonJS/AMD format for solid static analysis capabilities and compliance with JS standard:_ http://exploringjs.com/es6/ch_modules.html
+Now you can open `app.js` or `es6module.js` file, make some changes and save it to see __Hot-Reload__ update running application without page refresh!
 
 ---
 
 ### Features
-- Quickly Bootstrap new Babel or TypeScript App using Cool CLI Wizard - include Dev Server with Hot-Reload using SystemJS & JSPM
+- Quickly Bootstrap new Babel or TypeScript App using nice CLI Wizard - include Dev Server with Hot-Reload using SystemJS & JSPM
 - Fast & Scalable Hot-Reload Capabilities (perfect for ReactJS, Angular2, Vue & more...)
 - ReactJS Example workflow(https://github.com/piotrwitek/react-redux-typescript-starter-kit)
-- Live-reload resources like styles (CSS, SCSS), static assets or HTML files through System.js plugins
+- Live-reload static resources like styles (CSS, SCSS), images, fonts or HTML templates through [SystemJS Plugins Ecosystem](https://github.com/systemjs/systemjs#plugins)
 - Leveraging [SystemJS](https://github.com/systemjs/systemjs) for Universal Module Loading Support
 
 ---
 
-### Prerequisites
+### Project setup
 
-`npm i jspm@beta -D` - installs http://jspm.io
-`./node_modules/.bin/jspm init` - initialize jspm wizard
-`./node_modules/.bin/jspm i systemjs-hot-reloader` - installs client "Hot-Reload" dependency
+- http://jspm.io - package manager for JS apps
+`npm i jspm@beta -D`
+- init JSPM transpilation workflow
+`./node_modules/.bin/jspm init`
+- install hot-reload client library
+`./node_modules/.bin/jspm i systemjs-hot-reloader`
 
 ### Install
 
@@ -45,7 +46,7 @@ $ npm i jspm-hmr -D
 
 > __Tip:__ You can install it globally using -g flag so you can use it as simple http server in any directory on your machine
 
-> __Pro-Tip:__ You can use --init flag to initialize your project with index.html, app.js, server.js files - configured with hot-module-reload for JSPM & SystemJS
+> __Pro-Tip:__ You can use --init flag to initialize your project with index.html, app.js, server.js files - configured with hot-module-reload out-of-the-box
 
 ---
 
@@ -71,12 +72,17 @@ $ jspm-hmr [path] [options]
 
 - Start dev server in PWD  on port "4444" & automatically open in browser (last active window takes precedence)
 ```
-$ jspm-hmr . -p 4444 -o
+$ jspm-hmr . --port 4444 --open
 ```
 
-- Start dev server in directory "dist"  with caching set to "3600 sec" and proxy target set to "http://localhost:1234"
+- Start dev server in directory "dist" with caching set to "3600 sec" and proxy target set to "http://localhost:1234"
 ```
-$ jspm-hmr dist  -c 3600 -P http://localhost:1234
+$ jspm-hmr dist  --cache 3600 --proxy http://localhost:1234
+```
+
+- Start dev server in directory "dist" with https using built-in self-signed cert
+```
+$ jspm-hmr dist --ssl
 ```
 
 ---
