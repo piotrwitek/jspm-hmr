@@ -110,7 +110,16 @@ Uses:
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) for WebSocket Client
 - [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter) for WebSocket Server
 
-### Mandatory Peer Dependencies:
+### Motivation
+Although there are other projects such as jspm-server (a fork of live-server), these are not well-maintained.
+
+TODO: add at least one reason to create a new library rather than helping maintain the existing one: for example, built using Typescript so more maintainable?; designed to be more user-friendly or more extensible
+
+### Dependencies:
+- [http-server](https://github.com/indexzero/http-server)
+- [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter)
+
+### Peer Dependencies:
 - [jspm](https://github.com/jspm/jspm-cli)
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
 
