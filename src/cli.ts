@@ -48,7 +48,7 @@ commander
   .option('-S, --ssl', 'enables https (by default uses built-in self-signed cert)')
   .option('-K, --key <path>', 'path to ssl-key .pem file (overrides default key)')
   .option('-C, --cert <path>', 'path to ssl-cert .pem file (overrides default cert)')
-  .option('--history', 'enable HTML5 History Api Fallback')
+  .option('--fallback', 'enable HTML5 History Api Fallback')
   .option('--disable-hmr', 'disable Hot-Reload (Chokidar Socket Server)')
   .parse(process.argv);
 
@@ -75,7 +75,7 @@ async function mainAsync() {
       ssl: commander.ssl,
       key: commander.key,
       cert: commander.cert,
-      historyApiFallback: commander.history,
+      historyApiFallback: commander.fallback,
       disableHmr: commander.disableHmr,
     };
 
@@ -95,8 +95,8 @@ async function mainAsync() {
       .on('error', function (err: any) {
         if (err.code === 'EADDRINUSE') {
           console.log(`\n[WARNING] Selected address is in use: ${URL}`);
-          console.log(`[WARNING] Please try again using different port or address...`);
-          console.log();
+          console.log(`[WARNING] Please try again using different port or address...\n`);
+
           process.exit();
         }
       });

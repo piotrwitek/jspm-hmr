@@ -29,7 +29,7 @@
     "lint": "tslint --project src/tsconfig.json",
     "tsc": "tsc -p src --noEmit",
     "test": "echo 'No tests yet!'",
-    "dev": "ts-node -P src src/cli.ts"
+    "dev": "ts-node -P src src/cli.ts boilerplate"
   },
   "dependencies": {
     "chokidar-socket-emitter": "^0.6.0",

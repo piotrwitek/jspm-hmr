@@ -36,13 +36,12 @@ export function createServer(options: ServerOptions): JspmHmrServer {
   // APP
   const app = express();
 
-  // WWW Serving Location
-  // const wwwRoot = options.path || '.';
+  // WWW Root Path & Cache
+  const wwwRoot = options.path || '.';
+  const cache = options.cache * 1000 || -1;
+  app.use(express.static(wwwRoot, { maxAge: cache }));
 
-  // Cache
-  // const cache = options.cache || -1;
-
-  // CORS
+  // TODO: CORS
   // const headers = {
   //   'Access-Control-Allow-Origin': '*',
   //   'Access-Control-Allow-Credentials': 'true',
