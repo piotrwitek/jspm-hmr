@@ -15,9 +15,9 @@ export async function initProject() {
 
   // confirm targetRoot folder
   console.log('  Initialization directory -> ' + targetRoot);
-  const confirmed = await askConfirmationPromise('  - Is path correct?');
+  const initConfirmed = await confirmationPromptPromise('  - Is path correct?');
 
-  if (!confirmed) {
+  if (!initConfirmed) {
     console.log('  Initialization aborted.');
     return;
   }
@@ -25,11 +25,19 @@ export async function initProject() {
   // check files if exists the ask for confirmation to overwrite
   try {
     const files = [...clientFiles, ...serverFiles];
+
     for (let file of files) {
       const sourcePath = path.join(sourceRoot, file);
       const targetPath = path.join(targetRoot, file);
-      if (await checkFileExistsConfirmOverwrite(targetPath)) {
-        await copyFilePromise(sourcePath, targetPath);
+      if (await checkFileExistsPromise(targetPath)) {
+        console.log(`\n  File "${file}" already exists.`);
+        const fileOverwriteConfirmed = await confirmationPromptPromise('  - Overwrite?');
+
+        if (!fileOverwriteConfirmed) {
+          console.log('  Skipped');
+        } else {
+          await copyFilePromise(sourcePath, targetPath);
+        }
       }
     }
     console.log('\n Boilerplate initialization completed.');
@@ -39,22 +47,6 @@ export async function initProject() {
   }
 
   rl.close();
-}
-
-async function checkFileExistsConfirmOverwrite(file: string) {
-  const exist = await checkFileExistsPromise(file);
-
-  if (exist) {
-    console.log(`  File "${file}" already exists.`);
-    const confirmed = await askConfirmationPromise('  - Overwrite?');
-
-    if (!confirmed) {
-      console.log('  Skipped');
-      return false;
-    }
-  }
-
-  return true;
 }
 
 function checkFileExistsPromise(file: any): Promise<any> {
@@ -68,7 +60,7 @@ function checkFileExistsPromise(file: any): Promise<any> {
   });
 }
 
-function askConfirmationPromise(msg: string) {
+function confirmationPromptPromise(msg: string) {
   return new Promise((resolve, reject) => {
     rl.question(msg + ' (Y)/n: ', (answer) => {
       const parsed = answer.toString().toLowerCase();
@@ -90,7 +82,7 @@ function copyFilePromise(source: string, target: string) {
       fs.writeFile(target, data, (err2) => {
         if (err2) reject(err2);
 
-        console.log('  - %s -> %s', source, target);
+        console.log('  (%s) -> (%s)', source, target);
         resolve(true);
       });
     });

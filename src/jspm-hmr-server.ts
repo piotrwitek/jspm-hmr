@@ -20,7 +20,7 @@ export type ServerOptions = {
   ssl?: boolean,
   key?: string,
   cert?: string,
-  historyApiFallback?: boolean,
+  fallback?: boolean,
   disableHmr?: boolean,
 };
 
@@ -51,7 +51,7 @@ export function createServer(options: ServerOptions): JspmHmrServer {
   app.use(compress());
 
   // Apply routing rewrites to serve /index.html for SPA Applications
-  if (options.historyApiFallback) {
+  if (options.fallback) {
     app.use(historyApiFallback());
   }
 
@@ -89,15 +89,13 @@ export function createServer(options: ServerOptions): JspmHmrServer {
 
   // attach chokidar socket.io server
   if (!options.disableHmr) {
-    attachChokidarSocket(serverInstance);
+    const chokidarOptions = {
+      ...{ quiet: false },
+      app: serverInstance,
+    };
+
+    chokidar(chokidarOptions);
   }
 
   return serverInstance;
-}
-
-function attachChokidarSocket(server: Express.Application) {
-  chokidar({
-    app: server,
-    quiet: false,
-  });
 }

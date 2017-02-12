@@ -75,7 +75,7 @@ async function mainAsync() {
       ssl: commander.ssl,
       key: commander.key,
       cert: commander.cert,
-      historyApiFallback: commander.fallback,
+      fallback: commander.fallback,
       disableHmr: commander.disableHmr,
     };
 
