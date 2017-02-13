@@ -82,7 +82,7 @@ function copyFilePromise(source: string, target: string) {
       fs.writeFile(target, data, (err2) => {
         if (err2) reject(err2);
 
-        console.log('  (%s) -> (%s)', source, target);
+        console.log('%s -> %s', source, target);
         resolve(true);
       });
     });

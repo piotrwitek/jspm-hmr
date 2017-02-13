@@ -40,7 +40,7 @@ commander
   .option('-i, --init', 'CLI Wizard to bootstrap your project')
   .option('-o, --open', 'open default browser on start (default: false)')
   .option('-p, --port <number>', 'port number (default: 3000)', parseInt)
-  .option('-a, --address <string>', 'custom address (default: localhost)')
+  .option('-a, --address <address>', 'custom address (default: localhost)')
   .option('-c, --cache <seconds>', 'enable Cache-Control with max-age=<seconds> (default: -1)', parseInt)
   .option('-P, --proxy <address>:<port>', 'proxies requests to specified target')
   .option('--proxy-route <pattern>', 'proxies only requests that will match provided pattern')
