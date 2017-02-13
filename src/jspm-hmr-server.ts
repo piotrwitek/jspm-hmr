@@ -1,3 +1,4 @@
+import * as path from 'path';
 import * as fs from 'fs';
 import * as http from 'http';
 import * as https from 'https';
@@ -22,6 +23,7 @@ export type ServerOptions = {
   cert?: string,
   fallback?: boolean,
   disableHmr?: boolean,
+  verbose?: boolean,
 };
 
 // API
@@ -36,10 +38,8 @@ export function createServer(options: ServerOptions): JspmHmrServer {
   // APP
   const app = express();
 
-  // WWW Root Path & Cache
-  const wwwRoot = options.path || '.';
-  const cache = options.cache * 1000 || -1;
-  app.use(express.static(wwwRoot, { maxAge: cache }));
+  // Apply gzip compression
+  app.use(compress());
 
   // TODO: CORS
   // const headers = {
@@ -47,13 +47,17 @@ export function createServer(options: ServerOptions): JspmHmrServer {
   //   'Access-Control-Allow-Credentials': 'true',
   // };
 
-  // Apply gzip compression
-  app.use(compress());
-
   // Apply routing rewrites to serve /index.html for SPA Applications
+
   if (options.fallback) {
-    app.use(historyApiFallback());
+    const fallback = options.fallback || '/index.html';
+    console.log('history api fallback active', fallback);
+
+    app.use(historyApiFallback({
+      index: fallback, verbose: !!options.verbose,
+    }));
   }
+
 
   // Proxy
   if (options.proxy) {
@@ -70,7 +74,14 @@ export function createServer(options: ServerOptions): JspmHmrServer {
     });
   }
 
-  // SERVER INSTANCE
+  // Static files & Cache
+  const staticRoot = options.path || '.';
+  const cache = options.cache * 1000 || -1;
+
+  console.log(`static files served from ${path.resolve(staticRoot)}`);
+  app.use(express.static(staticRoot, { maxAge: cache }));
+
+  // Server Instance
   let serverInstance;
 
   if (options.ssl) {

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import * as path from 'path';
 import * as openerCommand from 'opener';
 import * as readline from 'readline';
 const rl = readline.createInterface({
@@ -48,7 +47,7 @@ commander
   .option('-S, --ssl', 'enables https (by default uses built-in self-signed cert)')
   .option('-K, --key <path>', 'path to ssl-key .pem file (overrides default key)')
   .option('-C, --cert <path>', 'path to ssl-cert .pem file (overrides default cert)')
-  .option('--fallback', 'enable HTML5 History Api Fallback')
+  .option('--fallback <rewrite_path>', 'enable HTML5 History Api Fallback (/index.html)')
   .option('--disable-hmr', 'disable Hot-Reload (Chokidar Socket Server)')
   .parse(process.argv);
 
@@ -87,7 +86,6 @@ async function mainAsync() {
 
     server
       .listen(PORT, (err: Error) => {
-        console.log(`serving ${path.resolve(options.path)}`);
         console.log(`listening at ${URL}`);
         console.log('[debug] %j', server.address());
         console.log('\n>>> hit CTRL-C twice to exit <<<\n');

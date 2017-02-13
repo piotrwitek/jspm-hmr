@@ -2,7 +2,7 @@
 const jspmHmrServer = require('jspm-hmr');
 
 const options = {
-  fallback: true,
+  fallback: '/index.html',
 };
 
 // SERVER
