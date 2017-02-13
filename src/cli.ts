@@ -43,11 +43,11 @@ commander
   .option('-a, --address <address>', 'custom address (default: localhost)')
   .option('-c, --cache <seconds>', 'enable Cache-Control with max-age=<seconds> (default: -1)', parseInt)
   .option('-P, --proxy <address>:<port>', 'proxies requests to specified target')
-  .option('--proxy-route <pattern>', 'proxies only requests that will match provided pattern')
+  .option('--proxy-route <route_path>', 'proxies only requests that match route path (default: *)')
   .option('-S, --ssl', 'enables https (by default uses built-in self-signed cert)')
   .option('-K, --key <path>', 'path to ssl-key .pem file (overrides default key)')
   .option('-C, --cert <path>', 'path to ssl-cert .pem file (overrides default cert)')
-  .option('--fallback <rewrite_path>', 'enable HTML5 History Api Fallback (/index.html)')
+  .option('-F, --fallback <rewrite_target>', 'enable HTML5 History Api Fallback (/index.html)')
   .option('--verbose', 'more logging messages for: fallback')
   .option('--disable-hmr', 'disable Hot-Reload (Chokidar Socket Server)')
   .parse(process.argv);
