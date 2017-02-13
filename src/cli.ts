@@ -48,6 +48,7 @@ commander
   .option('-K, --key <path>', 'path to ssl-key .pem file (overrides default key)')
   .option('-C, --cert <path>', 'path to ssl-cert .pem file (overrides default cert)')
   .option('--fallback <rewrite_path>', 'enable HTML5 History Api Fallback (/index.html)')
+  .option('--verbose', 'more logging messages for: fallback')
   .option('--disable-hmr', 'disable Hot-Reload (Chokidar Socket Server)')
   .parse(process.argv);
 
@@ -76,6 +77,7 @@ async function mainAsync() {
       cert: commander.cert,
       fallback: commander.fallback,
       disableHmr: commander.disableHmr,
+      verbose: commander.verbose,
     };
 
     const protocol = options.ssl ? 'https' : 'http';
