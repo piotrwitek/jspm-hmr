@@ -1,123 +1,112 @@
-/*
- *   Copyright 2016 Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
+import * as path from 'path';
+import * as fs from 'fs';
+import * as http from 'http';
+import * as https from 'https';
+import * as httpProxy from 'http-proxy';
+import * as express from 'express';
+import * as compress from 'compression';
+import * as historyApiFallback from 'connect-history-api-fallback';
+import * as chokidar from 'chokidar-socket-emitter';
 
-// TODO: switch to core http module
-const path = require('path');
-const httpServer = require('http-server');
-const chokidar = require('chokidar-socket-emitter');
-const openerCommand = require('opener');
-const packageVersion = require('../package.json').version;
-const Config = require('./config');
+import Config from './config';
 
+// TYPES
+export type JspmHmrServer = http.Server | https.Server;
 
-export function start(options: {
-  path: string,
-  key: string,
-  cert: string,
-  ssl: boolean,
-  port: number,
-  cache: number,
-  open: boolean,
-  openCommand?: string,
+export type ServerOptions = {
+  path?: string,
+  cache?: number,
   proxy?: string,
-}) {
+  proxyRoute?: string,
+  ssl?: boolean,
+  key?: string,
+  cert?: string,
+  fallback?: boolean,
+  disableHmr?: boolean,
+  verbose?: boolean,
+};
 
-  // init
-  const NODE_ENV = Config.NODE_ENV;
-  const hotReload = true;
-  const key = options.key || Config.KEY_PATH;
-  const cert = options.cert || Config.CERT_PATH;
-  const ssl = options.ssl || false;
-  const protocol = ssl ? 'https' : 'http';
-  const host = 'localhost';
-  const port = options.port || Config.WEB_PORT;
-  const url = protocol + '://' + host + ':' + port;
+// API
+/**
+ * server factory funciton
+ * @export
+ * @param {Options} options
+ * @returns
+ */
+export function createServer(options: ServerOptions): JspmHmrServer {
 
-  const open = options.open || false;
-  const command = options.openCommand || null;
+  // APP
+  const app = express();
 
-  const wwwRoot = options.path || '.';
-  const cache = options.cache || -1;
-  const proxy = options.proxy || undefined;
-  const server = createServer(wwwRoot, cache, proxy, ssl, key, cert);
+  // Apply gzip compression
+  app.use(compress());
 
-  logOptionsInfo(packageVersion, NODE_ENV, cache);
+  // TODO: CORS
+  // const headers = {
+  //   'Access-Control-Allow-Origin': '*',
+  //   'Access-Control-Allow-Credentials': 'true',
+  // };
 
-  // inject hmr & start server
-  if (hotReload) {
-    injectChokidarSocketEmitter(server);
+  // Apply routing rewrites to serve /index.html for SPA Applications
+
+  if (options.fallback) {
+    const fallback = options.fallback || '/index.html';
+    console.log('history api fallback active', fallback);
+
+    app.use(historyApiFallback({
+      index: fallback, verbose: !!options.verbose,
+    }));
   }
-  server.listen(port);
 
-  logStartedInfo(wwwRoot, url);
 
-  // open browser
-  if (open) {
-    openerCommand(url, {
-      command: command,
+  // Proxy
+  if (options.proxy) {
+    const proxyTarget = options.proxy;
+    const proxyRoute = options.proxyRoute || '*';
+
+    const proxy = httpProxy.createProxyServer();
+    app.use(proxyRoute, (req, res) => {
+      req.url = req.baseUrl;
+      proxy.web(req, res, { target: proxyTarget });
+      proxy.on('error', (err: Error) => {
+        console.log('Proxy Server Error: ', err.message);
+      });
     });
   }
 
-  return server;
-}
+  // Static files & Cache
+  const staticRoot = options.path || '.';
+  const cache = options.cache * 1000 || -1;
 
-function createServer(wwwRoot: string, cache: number, proxy?: string, ssl?: boolean, key?: string, cert?: string) {
-  let options: any = {
-    root: wwwRoot,
-    cache: cache,
-    robots: true,
-    proxy: proxy,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
-    },
-  };
-  if (ssl && key && cert) {
-    options.https = {
-      key: key,
-      cert: cert,
+  console.log(`static files served from ${path.resolve(staticRoot)}`);
+  app.use(express.static(staticRoot, { maxAge: cache }));
+
+  // Server Instance
+  let serverInstance;
+
+  if (options.ssl) {
+    const key = options.key || Config.KEY_PATH;
+    const cert = options.cert || Config.CERT_PATH;
+
+    const sslOptions = (key && cert) && {
+      key: fs.readFileSync(key),
+      cert: fs.readFileSync(cert),
     };
+
+    serverInstance = https.createServer(sslOptions, app);
+  } else {
+    serverInstance = http.createServer(app);
   }
-  return httpServer.createServer(options);
-}
 
-function injectChokidarSocketEmitter(server: any) {
-  chokidar({
-    app: server.server,
-  });
-}
+  // Chokidar Socket.io Server
+  if (!options.disableHmr) {
+    const chokidarOptions = {
+      ...{ quiet: false },
+      app: serverInstance,
+    };
 
-// log helpers
-// TODO: add proxy info
-function logOptionsInfo(version: string, nodeEnv: string, cache: number) {
-  const environmentText = (nodeEnv === 'production' ? 'production ' : 'development');
-  const cacheText = (cache ? 'enabled ' : 'disabled');
+    chokidar(chokidarOptions);
+  }
 
-  console.log('\n' +
-    '  ###################################' + '\n' +
-    '  #  JSPM Hot-Module-Reload v' + packageVersion + '  #' + '\n' +
-    '  #----------------+----------------#' + '\n' +
-    '  # environment    | ' + environmentText + '    #' + '\n' +
-    '  # cache          | ' + cacheText + '       #' + '\n' +
-    '  ###################################' + '\n',
-  );
-}
-
-function logStartedInfo(wwwRoot: string, url: string) {
-  console.log(`wwwroot at ${path.resolve(wwwRoot)}`);
-  console.log(`server running at ${url}`);
-  console.log('\n>>> hit CTRL-C twice to exit <<<\n');
+  return serverInstance;
 }
