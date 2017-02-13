@@ -74,6 +74,11 @@ $ jspm-hmr [path] [options]
     --disable-hmr                   disable Hot-Reload (Chokidar Socket Server)
 ---
 
+### Programmatic Usage
+https://github.com/piotrwitek/jspm-hmr/blob/master/boilerplate/server.js
+
+---
+
 ### Examples:
 
 - Start dev server in `pwd` on port "4444" & automatically open in browser (last active window takes precedence)
@@ -93,7 +98,7 @@ $ jspm-hmr dist --ssl
 
 - Start dev server in `pwd` with HTML5 History Api Fallback
 ```
-$ jspm-hmr --fallback 
+$ jspm-hmr --fallback /index.html
 ```
 
 ---
