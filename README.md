@@ -65,7 +65,7 @@ $ jspm-hmr [path] [options]
     -V, --version          output the version number
     -i, --init             CLI Wizard to bootstrap your project
     -o, --open             automatically open browser (default: false)
-    -p, --port <number>    port number (default: 8888)
+    -p, --port <number>    port number (default: 3000)
     -c, --cache <seconds>  enable Cache-Control with max-age=<seconds> (default: -1)
     -P, --proxy <url>      proxies requests to specified url    
     -S, --ssl              enables https (by default uses built-in self-signed cert)
