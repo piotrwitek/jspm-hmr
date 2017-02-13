@@ -1,17 +1,22 @@
-## HTTP Dev-Server with Hot-Reload for JavaScript (ES6 Modules)
+## JSPM Dev-Server with Hot-Reload for JavaScript (ES6 Modules)
 
-#### Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
+#### NodeJS/Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
 
 - Npm package: https://www.npmjs.com/package/jspm-hmr
-- ReactJS Boilerplate using this dev-server - https://github.com/piotrwitek/react-redux-typescript-starter-kit
+- (React / Redux / TypeScript / JSPM) Project Starter based on this Dev-Server - https://github.com/piotrwitek/react-redux-typescript-starter-kit
 
 ---
 
+### Motivation
+When starting development in JSPM/SystemJS Ecosystem you'll find out there is no standard dev-server, that could be equivalent in features to [webpack-dev-server](https://github.com/webpack/webpack-dev-server). Although there are several projects such as jspm-server (a fork of live-server), these are not well-maintained and have missing or broken support for Hot-Reload and Live-Reload which is the main focus of this project.
+Adding and configuring Hot-Reload manually is often hard and require advanced knowledge that not every developer needs to master in order to simply use the tool. 
+
+For that reasons I have decided to create library that is providing the dev-server with hot-reload preconfigured with best-practices in mind, battle-tested in production and [open-source project](https://github.com/piotrwitek/react-redux-typescript-starter-kit) and extended with new [features](https://github.com/piotrwitek/jspm-hmr/pull/4) [requested by](https://github.com/piotrwitek/jspm-hmr/issues/8) [community](https://github.com/piotrwitek/jspm-hmr/issues/3).
+
 ### Features
-- Fast Hot-Reload - using [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
-- Live-reload static files (e.g. styles (CSS/SCSS), images, fonts or HTML templates) through [SystemJS Plugins Ecosystem](https://github.com/systemjs/systemjs#plugins)
-- Universal Module Loading with [SystemJS](https://github.com/systemjs/systemjs)
-- Initialize minimal App with Babel or TypeScript transpilation workflow using CLI Wizard (including Hot-Reload configuration)
+- Configurable and feature-full web-server based on NodeJS/Express (built-in ssl, HTML5 history api fallback, proxy, cache, browser auto-start)
+- Project initialization wizard - create new or update an exisintg project with preconfigured server and client scripts with battle-tested Hot-Reload setup, using [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
+- `jspm-hmr` CLI utility to run a local web-server in any folder
 
 ---
 
@@ -110,7 +115,7 @@ Uses:
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) for WebSocket Client
 - [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter) for WebSocket Server
 
-### Mandatory Peer Dependencies:
+Peer Dependencies:
 - [jspm](https://github.com/jspm/jspm-cli)
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
 
