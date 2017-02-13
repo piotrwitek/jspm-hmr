@@ -1,17 +1,22 @@
-## HTTP Dev-Server with Hot-Reload for JavaScript (ES6 Modules)
+## JSPM Dev-Server with Hot-Reload for JavaScript (ES6 Modules)
 
-#### Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
+#### NodeJS/Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
 
 - Npm package: https://www.npmjs.com/package/jspm-hmr
-- ReactJS Boilerplate using this dev-server - https://github.com/piotrwitek/react-redux-typescript-starter-kit
+- (React / Redux / TypeScript / JSPM) Project Starter based on this Dev-Server - https://github.com/piotrwitek/react-redux-typescript-starter-kit
 
 ---
 
+### Motivation
+When starting development in JSPM/SystemJS Ecosystem you'll find out there is no standard dev-server, that could be equivalent in features to [webpack-dev-server](https://github.com/webpack/webpack-dev-server). Although there are several projects such as jspm-server (a fork of live-server), these are not well-maintained and have missing or broken support for Hot-Reload and Live-Reload which is the main focus of this project.
+Adding and configuring Hot-Reload manually is often hard and require advanced knowledge that not every developer needs to master in order to simply use the tool. 
+
+For that reasons I have decided to create library that is providing the dev-server with hot-reload preconfigured with best-practices in mind, battle-tested in production and [open-source project](https://github.com/piotrwitek/react-redux-typescript-starter-kit) and extended with new [features](https://github.com/piotrwitek/jspm-hmr/pull/4) [requested by](https://github.com/piotrwitek/jspm-hmr/issues/8) [community](https://github.com/piotrwitek/jspm-hmr/issues/3).
+
 ### Features
-- Fast Hot-Reload - using [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
-- Live-reload static files (e.g. styles (CSS/SCSS), images, fonts or HTML templates) through [SystemJS Plugins Ecosystem](https://github.com/systemjs/systemjs#plugins)
-- Universal Module Loading with [SystemJS](https://github.com/systemjs/systemjs)
-- Initialize minimal App with Babel or TypeScript transpilation workflow using CLI Wizard (including Hot-Reload configuration)
+- Configurable and feature-full web-server based on NodeJS/Express (built-in ssl, HTML5 history api fallback, proxy, cache, browser auto-start)
+- Project initialization wizard - create new or update an exisintg project with preconfigured server and client scripts with battle-tested Hot-Reload setup, using [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
+- `jspm-hmr` CLI utility to run a local web-server in any folder
 
 ---
 
@@ -74,6 +79,11 @@ $ jspm-hmr [path] [options]
     --disable-hmr                   disable Hot-Reload (Chokidar Socket Server)
 ---
 
+### Programmatic Usage
+https://github.com/piotrwitek/jspm-hmr/blob/master/boilerplate/server.js
+
+---
+
 ### Examples:
 
 - Start dev server in `pwd` on port "4444" & automatically open in browser (last active window takes precedence)
@@ -93,7 +103,7 @@ $ jspm-hmr dist --ssl
 
 - Start dev server in `pwd` with HTML5 History Api Fallback
 ```
-$ jspm-hmr --fallback 
+$ jspm-hmr --fallback /index.html
 ```
 
 ---
@@ -105,7 +115,7 @@ Uses:
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader) for WebSocket Client
 - [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter) for WebSocket Server
 
-### Mandatory Peer Dependencies:
+Peer Dependencies:
 - [jspm](https://github.com/jspm/jspm-cli)
 - [systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)
 
@@ -113,16 +123,24 @@ Uses:
 
 ### License
 
-Copyright 2016 Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)
+MIT License
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Copyright (c) 2016 Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)
 
-    http://www.apache.org/licenses/LICENSE-2.0
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
