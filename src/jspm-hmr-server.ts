@@ -101,7 +101,7 @@ export function createServer(options: ServerOptions): JspmHmrServer {
   // Chokidar Socket.io Server
   if (!options.disableHmr) {
     const chokidarOptions = {
-      ...{ quiet: false },
+      ...{ quiet: false, path: options.path },
       app: serverInstance,
     };
 
