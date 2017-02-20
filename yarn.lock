@@ -36,9 +36,9 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
-"@types/shelljs@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.6.0.tgz#090b705c102ce7fc5c0c5ea9b524418ff15840df"
+"@types/shelljs@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.7.0.tgz#229c157c6bc1e67d6b990e6c5e18dbd2ff58cff0"
   dependencies:
     "@types/node" "*"
 
@@ -1251,9 +1251,9 @@ once@~1.3.3:
   dependencies:
     wrappy "1"
 
-opener@^1.4.1:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.2.tgz#b32582080042af8680c389a499175b4c54fff523"
+opener@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.3.tgz#5c6da2c5d7e5831e8ffa3964950f8d6674ac90b8"
 
 optimist@~0.6.0:
   version "0.6.1"
