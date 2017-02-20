@@ -1,4 +1,4 @@
-## JSPM Dev-Server with Hot-Reload for JavaScript (ES6 Modules)
+## Dev-Server with Hot-Reload for JSPM / SystemJS Loader
 NodeJS/Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
 
 **Npm package:**
