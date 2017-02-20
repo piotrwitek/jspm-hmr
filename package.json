@@ -59,13 +59,9 @@
   "keywords": [
     "systemjs",
     "jspm",
-    "http",
-    "server",
+    "jspm-server",
+    "http-server",
     "hot-reload",
-    "live-reload",
-    "hmr",
-    "hot",
-    "module",
-    "replacement"
+    "systemjs-hot-reloader"
   ]
 }
