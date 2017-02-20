@@ -25,6 +25,7 @@ const rl = readline.createInterface({
 
 import * as jspmHmrServer from './jspm-hmr-server';
 import { initProject } from './init';
+import { logger } from './utils';
 
 import Config from './config';
 const packageVersion = require('../package.json').version;
@@ -64,9 +65,15 @@ async function mainAsync() {
     logHeaderMessage();
 
     // create server options
-    const OPEN = commander.open || false;
-    const PORT = commander.port || Config.PORT;
-    const ADDRESS = commander.address || Config.ADDRESS;
+    const OPEN: boolean = commander.open || false;
+    const PORT: number = commander.port || Config.PORT;
+    if (PORT < 1024) {
+      console.log();
+      logger.warning(`PORT lower than 1024 require Admin Priviledges`);
+      console.log();
+    }
+    const ADDRESS: string = commander.address || Config.ADDRESS;
+
     const options = {
       path: commander.args[0] || '.',
       cache: commander.cache,
@@ -86,37 +93,41 @@ async function mainAsync() {
     // SERVER
     const server = jspmHmrServer.createServer(options);
 
-    server
-      .listen(PORT, (err: Error) => {
-        console.log(`listening at ${URL}`);
-        console.log('[debug] %j', server.address());
-        console.log('\n>>> hit CTRL-C twice to exit <<<\n');
-      })
-      .on('error', function (err: any) {
-        if (err.code === 'EADDRINUSE') {
-          console.log(`\n[WARNING] Selected address is in use: ${URL}`);
-          console.log(`[WARNING] Please try again using different port or address...\n`);
+    server.on('error', function (err: any) {
+      if (err.code === 'EADDRINUSE') {
+        logger.warning(`Selected address is in use: ${URL}`);
+        logger.warning(`Please try again using different port or address...`);
+        process.exit();
+      }
+      throw err;
+    });
 
-          process.exit();
-        }
-      });
+    server.listen(PORT, () => {
+      console.log(`listening at ${URL}`);
+      // logger.debug(server.address().toString());
+      console.log();
+      console.log('>>> hit CTRL-C twice to exit <<<\n');
 
-    // OPEN BROWSER
-    if (OPEN) {
-      openerCommand(URL, {
-        command: undefined,
-      });
-    }
+      // OPEN BROWSER
+      if (OPEN) {
+        openerCommand(URL, {
+          command: undefined,
+        });
+      }
+    });
   }
 
   rl.close();
 }
 
 function logHeaderMessage() {
+  const message = `#  JSPM Hot-Module-Reload v${VERSION}  #`;
+  const border = '#'.repeat(message.length);
+
   console.log(`
-  ###################################
-  #  JSPM Hot-Module-Reload v${VERSION}  #
-  ###################################
+  ${border}
+  ${message}
+  ${border}
 `);
   console.log(`environment ${NODE_ENV || 'development'}`);
 }
