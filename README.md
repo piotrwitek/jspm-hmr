@@ -1,14 +1,16 @@
-## JSPM Dev-Server with Hot-Reload for JavaScript (ES6 Modules)
+## Dev-Server with Hot-Reload for JSPM / SystemJS Loader
+NodeJS/Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
 
-#### NodeJS/Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
+**Npm package:**
+- https://www.npmjs.com/package/jspm-hmr
 
-- Npm package: https://www.npmjs.com/package/jspm-hmr
-- (React / Redux / TypeScript / JSPM) Project Starter based on this Dev-Server - https://github.com/piotrwitek/react-redux-typescript-starter-kit
+**Project Starter using this Dev-Server (React / Redux / TypeScript / JSPM):**
+- https://github.com/piotrwitek/react-redux-typescript-starter-kit
 
 ---
 
 ### Motivation
-When starting development in JSPM/SystemJS Ecosystem you'll find out there is no standard dev-server, that could be equivalent in features to [webpack-dev-server](https://github.com/webpack/webpack-dev-server). Although there are several projects such as jspm-server (a fork of live-server), these are not well-maintained and have missing or broken support for Hot-Reload and Live-Reload which is the main focus of this project.
+When starting development in JSPM / SystemJS Ecosystem you'll find out there is no standard dev-server, that could be equivalent in features to [webpack-dev-server](https://github.com/webpack/webpack-dev-server). Although there are several projects such as jspm-server (a fork of live-server), these are not well-maintained and have missing or broken support for Hot-Reload and Live-Reload which is the main focus of this project.
 Adding and configuring Hot-Reload manually is often hard and require advanced knowledge that not every developer needs to master in order to simply use the tool. 
 
 For that reasons I have decided to create library that is providing the dev-server with hot-reload preconfigured with best-practices in mind, battle-tested in production and [open-source project](https://github.com/piotrwitek/react-redux-typescript-starter-kit) and extended with new [features](https://github.com/piotrwitek/jspm-hmr/pull/4) [requested by](https://github.com/piotrwitek/jspm-hmr/issues/8) [community](https://github.com/piotrwitek/jspm-hmr/issues/3).
