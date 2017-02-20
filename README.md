@@ -1,4 +1,4 @@
-## Dev-Server with Hot-Reload for JSPM / SystemJS Loader
+## Dev-Server with Hot-Reload for JSPM & SystemJS
 NodeJS/Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
 
 **Npm package:**
@@ -62,23 +62,27 @@ $ npm i jspm-hmr -D
 ```
 $ jspm-hmr [path] [options]
 ```
- Options:
+
+Path: `(default: .)`
+
+Options:
 
     -h, --help                      output usage information
     -V, --version                   output the version number
-    -i, --init                      CLI Wizard to bootstrap your project
-    -o, --open                      automatically open browser (default: false)
-    -p, --port <number>             port number (default: 3000)
-    -a, --address <address>         custom address (default: localhost)
-    -c, --cache <seconds>           enable Cache-Control with max-age=<seconds> (default: -1)
-    -P, --proxy <address>:<port>    proxies requests to specified target
-    --proxy-route <route_path>      proxies only requests that match route path (default: *)
-    -S, --ssl                       enables https (by default uses built-in self-signed cert)
-    -K, --key <path>                path to ssl-key .pem file (overrides default key)
-    -C, --cert <path>               path to ssl-cert .pem file (overrides default cert)
-    -F, --fallback <rewrite_target> enable HTML5 History Api Fallback (/index.html)
-    --verbose                       more logging messages for: fallback
+    -I, --init                      run CLI Wizard to bootstrap your project
+    -O, --open                      open default browser on server start
+    --port <number>                 change default port number (default: 3000)
+    --address <address>             change default address (default: localhost)
+    --cache <seconds>               change default Cache-Control header max-age=<seconds> (default: -1)
+    --proxy <address:port>          enable proxy of all requests to specified target
+    --proxy-route <route_pattern>   change default route pattern to filter proxied requests (default: *)
+    -S, --ssl                       enable https (by default will use built-in self-signed cert)
+    --key <path>                    set path to ssl-key .pem file (will override built-in ssl-key)
+    --cert <path>                   set path to ssl-cert .pem file (will override built-in ssl-cert)
+    -F, --fallback [rewrite_target] enable HTML5 History Api Fallback (default: /index.html) [optional: change rewrite target]
     --disable-hmr                   disable Hot-Reload (Chokidar Socket Server)
+    --verbose                       enable verbose logging for: fallback rewrites
+
 ---
 
 ### Programmatic Usage
@@ -88,24 +92,29 @@ https://github.com/piotrwitek/jspm-hmr/blob/master/boilerplate/server.js
 
 ### Examples:
 
-- Start dev server in `pwd` on port "4444" & automatically open in browser (last active window takes precedence)
+- Start dev server in (by default) current directory with enabled HTML5 History Api Fallback (by default rewrite set to `/index.html`)
+```
+$ jspm-hmr --fallback
+```
+
+- Start dev server in current directory on port `4444` & open browser on server start (last active window takes precedence)
 ```
 $ jspm-hmr . --port 4444 --open
 ```
 
-- Start dev server in directory "dist" with caching set to "3600 sec" and proxy target set to "http://localhost:1234" with proxy route pattern equal to `/api/`
+- Start dev server in `dist` directory with enabled proxy and target set to "http://localhost:1234" and proxy route pattern set to `/api/`
 ```
-$ jspm-hmr dist  --cache 3600 --proxy http://localhost:1234 --proxy-route /api/
-```
-
-- Start dev server in directory "dist" with https using built-in self-signed cert
-```
-$ jspm-hmr dist --ssl
+$ jspm-hmr dist --proxy http://localhost:1234 --proxy-route /api/
 ```
 
-- Start dev server in `pwd` with HTML5 History Api Fallback
+- Start dev server in current directory with enabled https using built-in self-signed cert
 ```
-$ jspm-hmr --fallback /index.html
+$ jspm-hmr --ssl
+```
+
+- Start dev server in current directory with caching headers set to "3600 sec"
+```
+$ jspm-hmr --ssl --cache 3600
 ```
 
 ---

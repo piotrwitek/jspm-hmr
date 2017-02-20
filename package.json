@@ -1,7 +1,7 @@
 {
   "name": "jspm-hmr",
   "version": "1.0.0-rc1",
-  "description": "HOT-RELOAD & DEV-SERVER for Vanilla JavaScript (ES6 Modules) - powered by SystemJS & JSPM",
+  "description": "Dev-Server with Hot-Reload for JSPM & SystemJS Module Loader",
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
   "repository": "https://github.com/piotrwitek/jspm-hmr",
   "homepage": "https://github.com/piotrwitek/jspm-hmr",
@@ -29,7 +29,7 @@
     "lint": "tslint --project src/tsconfig.json",
     "tsc": "tsc -p src --noEmit",
     "test": "echo 'No tests yet!'",
-    "dev": "ts-node -P src src/cli.ts boilerplate"
+    "dev": "ts-node -P src src/cli.ts"
   },
   "dependencies": {
     "chokidar-socket-emitter": "^0.6.0",
