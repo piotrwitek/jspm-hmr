@@ -3,7 +3,7 @@
 #### NodeJS/Express Server ehnanced with Chokidar WebSocket Server emitting events on file changes
 
 - Npm package: https://www.npmjs.com/package/jspm-hmr
-- (React / Redux / TypeScript / JSPM) Project Starter based on this Dev-Server - https://github.com/piotrwitek/react-redux-typescript-starter-kit
+- Project Starter using this Dev-Server (React / Redux / TypeScript / JSPM): https://github.com/piotrwitek/react-redux-typescript-starter-kit
 
 ---
 
