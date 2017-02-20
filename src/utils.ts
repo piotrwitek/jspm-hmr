@@ -4,3 +4,12 @@ export function rightPad(subject: string | number, length: number, symbol: strin
   }
   return (subject.toString() + symbol.repeat(length)).slice(-length);
 }
+
+export const logger = {
+  warning: (message: string) => {
+    console.log(`[WARNING] ${message}`);
+  },
+  debug: (message: string) => {
+    console.log(`[DEBUG] ${message}`);
+  },
+};
