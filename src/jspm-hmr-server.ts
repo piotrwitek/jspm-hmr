@@ -47,18 +47,6 @@ export function createServer(options: ServerOptions): JspmHmrServer {
   //   'Access-Control-Allow-Credentials': 'true',
   // };
 
-  // Apply routing rewrites to serve /index.html for SPA Applications
-
-  if (options.fallback) {
-    const fallback = options.fallback === true ? '/index.html' : options.fallback;
-    console.log('history api fallback active', fallback);
-
-    app.use(historyApiFallback({
-      index: fallback, verbose: !!options.verbose,
-    }));
-  }
-
-
   // Proxy
   if (options.proxy) {
     const proxyTarget = options.proxy;
@@ -73,6 +61,18 @@ export function createServer(options: ServerOptions): JspmHmrServer {
       });
     });
   }
+
+  // Apply routing rewrites to serve /index.html for SPA Applications
+
+  if (options.fallback) {
+    const fallback = options.fallback === true ? '/index.html' : options.fallback;
+    console.log('history api fallback active', fallback);
+
+    app.use(historyApiFallback({
+      index: fallback, verbose: !!options.verbose,
+    }));
+  }
+
 
   // Static files & Cache
   const staticRoot = options.path || '.';
