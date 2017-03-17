@@ -66,7 +66,7 @@ export function createServer(options: ServerOptions): JspmHmrServer {
 
     const proxy = httpProxy.createProxyServer();
     app.use(proxyRoute, (req, res) => {
-      req.url = req.baseUrl;
+      req.url = `${req.baseUrl}${req.url}`;
       proxy.web(req, res, { target: proxyTarget });
       proxy.on('error', (err: Error) => {
         console.log('Proxy Server Error: ', err.message);
