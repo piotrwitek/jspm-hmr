@@ -28,7 +28,7 @@
     "check": "yarn run lint & yarn run tsc",
     "lint": "tslint --project src/tsconfig.json",
     "tsc": "tsc -p src --noEmit",
-    "test": "echo 'No tests yet!'",
+    "test": "jest --config jest.json test/",
     "dev": "ts-node -P src src/cli.ts"
   },
   "dependencies": {
@@ -45,10 +45,15 @@
   "devDependencies": {
     "@types/compression": "^0.0.33",
     "@types/express": "^4.0.35",
+    "@types/jest": "^19.2.2",
     "@types/node": "^7.0.5",
     "@types/shelljs": "^0.7.0",
+    "@types/supertest": "^2.0.0",
     "husky": "^0.13.1",
+    "jest": "^19.0.2",
     "shx": "^0.2.2",
+    "supertest": "^3.0.0",
+    "ts-jest": "^19.0.1",
     "ts-node": "^2.1.0",
     "tslint": "^4.4.2",
     "typescript": "^2.1.6"
