@@ -1,7 +1,10 @@
 {
+  "automock": false,
+  "verbose": true,
   "transform": {
     ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
   },
+  "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
   "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
   "moduleFileExtensions": [
     "ts",

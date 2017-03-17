@@ -28,7 +28,7 @@
     "check": "yarn run lint & yarn run tsc",
     "lint": "tslint --project src/tsconfig.json",
     "tsc": "tsc -p src --noEmit",
-    "test": "jest --config jest.json test/",
+    "test": "jest --forceExit --config jest.json test/",
     "dev": "ts-node -P src src/cli.ts"
   },
   "dependencies": {
