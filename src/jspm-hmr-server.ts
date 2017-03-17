@@ -76,7 +76,7 @@ export function createServer(options: ServerOptions): JspmHmrServer {
 
   // Static files & Cache
   const staticRoot = options.path || '.';
-  const cache = options.cache * 1000 || -1;
+  const cache = options.cache && options.cache * 1000 || -1;
 
   console.log(`static files served from ${path.resolve(staticRoot)}`);
   app.use(express.static(staticRoot, { maxAge: cache }));
