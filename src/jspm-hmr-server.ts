@@ -58,17 +58,16 @@ export function createServer(options: ServerOptions): JspmHmrServer {
     }));
   }
 
-
   // Proxy
   if (options.proxy) {
     const proxyTarget = options.proxy;
     const proxyRoute = options.proxyRoute || '*';
 
-    const proxy = httpProxy.createProxyServer();
+    const proxyServer = httpProxy.createProxyServer();
     app.use(proxyRoute, (req, res) => {
-      req.url = `${req.baseUrl}${req.url}`;
-      proxy.web(req, res, { target: proxyTarget });
-      proxy.on('error', (err: Error) => {
+      req.url = `${req.originalUrl}`;
+      proxyServer.web(req, res, { target: proxyTarget });
+      proxyServer.on('error', (err: Error) => {
         console.log('Proxy Server Error: ', err.message);
       });
     });
