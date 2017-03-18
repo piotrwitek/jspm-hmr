@@ -47,18 +47,7 @@ export function createServer(options: ServerOptions): JspmHmrServer {
   //   'Access-Control-Allow-Credentials': 'true',
   // };
 
-  // Apply routing rewrites to serve /index.html for SPA Applications
-
-  if (options.fallback) {
-    const fallback = options.fallback === true ? '/index.html' : options.fallback;
-    console.log('history api fallback active', fallback);
-
-    app.use(historyApiFallback({
-      index: fallback, verbose: !!options.verbose,
-    }));
-  }
-
-  // Proxy
+  // Apply Proxy middleware
   if (options.proxy) {
     const proxyTarget = options.proxy;
     const proxyRoute = options.proxyRoute || '*';
@@ -73,16 +62,26 @@ export function createServer(options: ServerOptions): JspmHmrServer {
     });
   }
 
-  // Static files & Cache
-  const staticRoot = options.path || '.';
-  const cache = options.cache && options.cache * 1000 || -1;
+  // Apply Fallback middleware to rewrite route requests
+  // and serve /index.html for SPA Applications
+  if (options.fallback) {
+    const fallback = options.fallback === true ? '/index.html' : options.fallback;
+    console.log('history api fallback active', fallback);
 
+    app.use(historyApiFallback({
+      index: fallback, verbose: !!options.verbose,
+    }));
+  }
+
+  // Cache config
+  const cache = options.cache && options.cache * 1000 || -1;
+  // Server static files with cache headers
+  const staticRoot = options.path || '.';
   console.log(`static files served from ${path.resolve(staticRoot)}`);
   app.use(express.static(staticRoot, { maxAge: cache }));
 
-  // Server Instance
+  // Creating NodeJS Server Instance
   let serverInstance;
-
   if (options.ssl) {
     const key = options.key || Config.KEY_PATH;
     const cert = options.cert || Config.CERT_PATH;
@@ -97,7 +96,7 @@ export function createServer(options: ServerOptions): JspmHmrServer {
     serverInstance = http.createServer(app);
   }
 
-  // Chokidar Socket.io Server
+  // Creating Chokidar Socket.io Server
   if (!options.disableHmr) {
     const chokidarOptions = {
       ...{ quiet: false, path: options.path },
