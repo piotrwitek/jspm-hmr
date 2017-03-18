@@ -1,6 +1,6 @@
 {
   "name": "jspm-hmr",
-  "version": "1.0.0-rc4",
+  "version": "1.0.0-rc5",
   "description": "Dev-Server with Hot-Reload for JSPM & SystemJS",
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
   "repository": "https://github.com/piotrwitek/jspm-hmr",
