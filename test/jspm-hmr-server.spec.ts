@@ -89,9 +89,8 @@ describe('testing jspmHmrServer features', () => {
     });
   });
 
-  describe(`--proxy ${TARGET_ADDRESS} --fallback `, () => {
-    it('should proxy request even if fallback is enabled', (done) => {
-      // proxy will take precenece
+  describe(`--proxy ${TARGET_ADDRESS} --proxyRoute /api --fallback `, () => {
+    it('should proxy request even if fallback is enabled (proxy precenece over fallback)', (done) => {
       const proxyServer = createServer({
         path: './boilerplate/',
         proxy: TARGET_ADDRESS,
