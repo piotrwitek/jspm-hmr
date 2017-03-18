@@ -107,7 +107,11 @@ describe('testing jspmHmrServer features', () => {
         done();
       }).listen(TARGET_PORT);
 
-      http.request(`${SERVER_ADDRESS}/api/search?param=value`).end();
+      http.request({
+        port: SERVER_PORT,
+        path: '/api/search?param=value',
+        headers: {'accept': '*/*'}
+      }).end();
     });
   });
 
