@@ -78,6 +78,7 @@ describe('testing jspmHmrServer features', () => {
         path: '/profile/',
         headers: { 'accept': '*/*' },
       }, (res) => {
+        expect(res.statusCode).toEqual(404);
         targetServer.close(() => { console.log('target closed'); });
         proxyServer.close(() => { console.log('proxy closed'); });
         done();
@@ -138,4 +139,30 @@ describe('testing jspmHmrServer features', () => {
     });
   });
 
+  it('should return index.html if not proxy route', (done) => {
+    const proxyServer = createServer({
+      path: './boilerplate/',
+      proxy: PROXY_TARGET_ADDRESS,
+      proxyRoute: '/api',
+      fallback: true,
+      disableHmr: true,
+      verbose: true,
+    }).listen(PROXY_SERVER_PORT);
+
+    const targetServer = http.createServer(function handler(req, res) {
+      expect(handler).not.toHaveBeenCalled();
+    }).listen(TARGET_SERVER_PORT);
+
+    http.request({
+      host: PROXY_SERVER_HOST,
+      port: PROXY_SERVER_PORT,
+      path: '/profile/',
+      headers: { 'accept': '*/*' },
+    }, (res) => {
+      expect(res.statusCode).toEqual(200);
+      targetServer.close(() => { console.log('target closed'); });
+      proxyServer.close(() => { console.log('proxy closed'); });
+      done();
+    }).end();
+  });
 });
