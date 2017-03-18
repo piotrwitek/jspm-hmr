@@ -31,6 +31,7 @@
     "target": "es5",
     "jsx": "react",
     "lib": [
+      "webworker",
       "es2016",
       "es2017.object"
     ]
