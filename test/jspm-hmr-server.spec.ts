@@ -38,18 +38,18 @@ describe('testing jspmHmrServer features', () => {
       }).listen(SERVER_PORT);
 
       const targetServer = http.createServer((req, res) => {
-        expect(req.url).toEqual('/?parameter=test');
+        expect(req.url).toEqual('/api/search?param=value');
         targetServer.close(() => { console.log('target closed'); });
         proxyServer.close(() => { console.log('proxy closed'); });
         done();
       }).listen(TARGET_PORT);
 
-      http.request(`${SERVER_ADDRESS}/?parameter=test`).end();
+      http.request(`${SERVER_ADDRESS}/api/search?param=value`).end();
     });
   });
 
   describe(`--proxy ${TARGET_ADDRESS} --proxyRoute /api`, () => {
-    it('should not receive request if not contain "/api" route', (done) => {
+    it('should not proxy request if not contain "/api/" route', (done) => {
       const proxyServer = createServer({
         path: './boilerplate/',
         proxy: TARGET_ADDRESS,
@@ -69,7 +69,7 @@ describe('testing jspmHmrServer features', () => {
       }).end();
     });
 
-    it('should reveive request for "/api" route', (done) => {
+    it('should proxy request if contain "/api" route', (done) => {
       const proxyServer = createServer({
         path: './boilerplate/',
         proxy: TARGET_ADDRESS,
@@ -85,7 +85,30 @@ describe('testing jspmHmrServer features', () => {
         done();
       }).listen(TARGET_PORT);
 
-      http.request(`${SERVER_ADDRESS}/api`).end();
+      http.request(`${SERVER_ADDRESS}/api/`).end();
+    });
+  });
+
+  describe(`--proxy ${TARGET_ADDRESS} --fallback `, () => {
+    it('should proxy request even if fallback is enabled', (done) => {
+      // proxy will take precenece
+      const proxyServer = createServer({
+        path: './boilerplate/',
+        proxy: TARGET_ADDRESS,
+        proxyRoute: '/api',
+        fallback: true,
+        disableHmr: true,
+        verbose: true,
+      }).listen(SERVER_PORT);
+
+      const targetServer = http.createServer(function handler(req, res) {
+        expect(req.url).toEqual('/api/search?param=value');
+        targetServer.close(() => { console.log('target closed'); });
+        proxyServer.close(() => { console.log('proxy closed'); });
+        done();
+      }).listen(TARGET_PORT);
+
+      http.request(`${SERVER_ADDRESS}/api/search?param=value`).end();
     });
   });
 
